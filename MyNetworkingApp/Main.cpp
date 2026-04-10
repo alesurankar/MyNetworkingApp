@@ -28,7 +28,7 @@ int main()
 
     bool running = true;
     while (running) {
-        std::cout << "(s)erver or (c)lient or (e)xit";
+        std::cout << "(s)erver or (c)lient or (e)xit\n";
         char c;
         std::cin >> c;
 
