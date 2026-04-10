@@ -1,26 +1,51 @@
-#include <boost/process/v1.hpp>
 #include <iostream>
+#include <filesystem>
 
-namespace bp = boost::process::v1;
+
+void launch_in_terminal(const std::string& exe)
+{
+#ifdef _WIN32
+    std::string cmd = "start \"\" \"" + exe + "\"";
+    std::system(cmd.c_str());
+#elif __linux__
+    // TODO
+#elif __APPLE__
+    // TODO
+#endif
+}
 
 int main()
 {
-    std::cout << "spawn (s)erver or (c)lient? ";
-    char c;
-    std::cin >> c;
+    std::cout << "CWD: " << std::filesystem::current_path() << "\n";
+#ifdef _DEBUG
+    std::string config = "Debug";
+#else
+    std::string config = "Release";
+#endif
+    std::string serverPath = "Server/bin/" + config + "/Server.exe";
+    std::string clientPath = "Client/bin/" + config + "/Client.exe";
 
-    try {
-        if (c == 's') {
-            bp::child server("../Server/bin/Debug/Server.exe");
-            server.wait();
+
+    bool running = true;
+    while (running) {
+        std::cout << "(s)erver or (c)lient or (e)xit";
+        char c;
+        std::cin >> c;
+
+        try {
+            if (c == 's') {
+                launch_in_terminal(serverPath);
+            }
+            else if (c == 'c') {
+                launch_in_terminal(clientPath);
+            }
+            else if (c == 'e') {
+                running = false;
+            }
         }
-        else if (c == 'c') {
-            bp::child client("../Client/bin/Debug/Client.exe");
-            client.wait();
+        catch (const std::exception& e) {
+            std::cout << "Error: " << e.what() << "\n";
         }
-    }
-    catch (const std::exception& e) {
-        std::cout << "Error: " << e.what() << "\n";
     }
     return 0;
 }
