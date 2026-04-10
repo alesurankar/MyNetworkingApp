@@ -82,12 +82,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="aapp..cpp" />
-    <ClCompile Include="amain.cpp" />
+    <ClCompile Include="app..cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="tcp_client.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="aapp.hpp" />
+    <ClInclude Include="app.hpp" />
     <ClInclude Include="tcp_client.hpp" />
   </ItemGroup>
   <ItemGroup>
