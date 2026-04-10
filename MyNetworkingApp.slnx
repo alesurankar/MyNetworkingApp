@@ -6,6 +6,6 @@
     <File Path="README.md" />
   </Folder>
   <Project Path="Client/Client.vcxproj" Id="17dba646-8e77-4034-bed5-d1bc295dc8f6" />
-  <Project Path="MyNetworkingApp/MyNetworkingApp.vcxproj" Id="3edc4ee5-f28f-4b6c-b0f2-ea9dcd521865" />
+  <Project Path="Controller/Controller.vcxproj" Id="b68fd187-f907-46af-a864-e520f245d17b" />
   <Project Path="Server/Server.vcxproj" Id="2171d2fc-760d-4342-aeed-32efefe6057f" />
 </Solution>
