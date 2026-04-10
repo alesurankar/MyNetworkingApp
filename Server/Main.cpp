@@ -1,13 +1,17 @@
-#include "App.h"
+#include "app.hpp"
+#include "tcp_server.hpp"
+
 #include <atomic>
+#include <memory>
 
 
 int main()
 {
-    std::atomic<bool> running{ true };
-    App app(running);
+	std::unique_ptr<TcpServer> server_;
+    std::atomic<bool> running_ = true;
+    App app(running_);
 
-    while (running) {
+    while (running_) {
 		app.Run();
     }
 
