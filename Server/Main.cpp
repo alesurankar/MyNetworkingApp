@@ -1,14 +1,15 @@
-#include <boost/asio.hpp>
-#include <iostream>
+#include "App.h"
+#include <atomic>
 
 
 int main()
 {
-    boost::asio::io_context io;
-    std::cout << "Boost.Asio works in Server!\n";
+    std::atomic<bool> running{ true };
+    App app(running);
 
-    char c;
-    std::cin >> c;
+    while (running) {
+		app.Run();
+    }
 
     return 0;
 }
