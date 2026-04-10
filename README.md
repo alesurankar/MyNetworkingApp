@@ -15,3 +15,13 @@ building boost:
 	- minimal build: .\b2 toolset=msvc --with-system --with-filesystem
 5. After the build process is complete, the compiled libraries will be located in the stage/lib directory within the boost folder.
 6. Linker → General → Additional Library Directories: add: C:\path\to\boost_1_xx_x\stage\lib
+
+
+## Project Structure
+
+```
+MyNetworkingApp/
+├── Controller/   # Startup launcher app
+├── Server/       # TCP server (Boost.Asio)
+├── Client/       # TCP client
+```

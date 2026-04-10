@@ -1,8 +1,11 @@
 #include <iostream>
 #include <filesystem>
+#include <string>
+#include <cstdlib>
+#include <exception>
 
 
-void launch_in_terminal(const std::string& exe)
+static void launch_in_terminal(const std::string& exe)
 {
 #ifdef _WIN32
     std::string cmd = "start \"\" \"" + exe + "\"";

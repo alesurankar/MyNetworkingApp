@@ -15,14 +15,6 @@ It simplifies testing by allowing you to quickly spawn either:
 * Automatically selects Debug/Release build
 * Cross-platform structure (Windows implemented, Linux/macOS planned)
 
-## Project Structure
-
-```
-MyNetworkingApp/
-├── Controller/   # This launcher app
-├── Server/       # TCP server (Boost.Asio)
-├── Client/       # TCP client
-```
 
 ## Build
 
@@ -38,12 +30,7 @@ Example (depending on your setup):
 
 ## Usage
 
-Run the controller:
-
-```
-./MyNetworkingApp
-```
-
+Run the controller,
 Then choose:
 
 ```

@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="amain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="app.cpp">
+    <ClCompile Include="aapp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tcp_server.cpp">
@@ -26,11 +26,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="app.hpp">
+    <ClInclude Include="aapp.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tcp_server.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
   </ItemGroup>
 </Project>

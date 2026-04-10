@@ -82,13 +82,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="app.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="aapp.cpp" />
+    <ClCompile Include="amain.cpp" />
     <ClCompile Include="tcp_server.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="app.hpp" />
+    <ClInclude Include="aapp.hpp" />
     <ClInclude Include="tcp_server.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

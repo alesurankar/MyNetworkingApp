@@ -2,6 +2,7 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <atomic>
 
 
 App::App(std::atomic<bool>& runFlag)
