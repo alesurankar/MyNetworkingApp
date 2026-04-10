@@ -5,7 +5,7 @@
   <Folder Name="/Solution Items/">
     <File Path="README.md" />
   </Folder>
-  <Project Path="Client/Client.vcxproj" />
-  <Project Path="MyNetworkingApp/MyNetworkingApp.vcxproj" />
-  <Project Path="Server/Server.vcxproj" />
+  <Project Path="Client/Client.vcxproj" Id="17dba646-8e77-4034-bed5-d1bc295dc8f6" />
+  <Project Path="MyNetworkingApp/MyNetworkingApp.vcxproj" Id="3edc4ee5-f28f-4b6c-b0f2-ea9dcd521865" />
+  <Project Path="Server/Server.vcxproj" Id="2171d2fc-760d-4342-aeed-32efefe6057f" />
 </Solution>
