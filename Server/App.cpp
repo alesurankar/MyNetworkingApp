@@ -1,5 +1,7 @@
 #include "App.h"
 #include <iostream>
+#include <thread>
+#include <chrono>
 
 
 App::App(std::atomic<bool>& runFlag)
@@ -14,5 +16,6 @@ App::~App()
 
 void App::Run()
 {
-	std::cout << "App is running...\n";
+	std::cout << "Server is running...\n";
+	std::this_thread::sleep_for(std::chrono::seconds(1));
 }
