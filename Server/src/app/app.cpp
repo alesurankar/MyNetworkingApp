@@ -17,6 +17,11 @@ App::~App()
 
 void App::Run()
 {
-	std::cout << "Server is running...\n";
-	std::this_thread::sleep_for(std::chrono::seconds(1));
+	int i = 0;
+	while (i < 4) {
+		std::cout << "Server is running...\n";
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+		i++;
+	}
+	running_ = false;
 }

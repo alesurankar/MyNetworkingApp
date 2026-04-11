@@ -58,7 +58,10 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\aleur\Desktop\Libraries\boost_1_90_0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aleur\Desktop\Libraries\boost_1_90_0;$(ProjectDir)/src</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -74,7 +77,10 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\aleur\Desktop\Libraries\boost_1_90_0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aleur\Desktop\Libraries\boost_1_90_0;$(ProjectDir)/src</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -82,13 +88,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="app.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="tcp_server.cpp" />
+    <ClCompile Include="src\app\app.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\networking\tcp_server.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="app.hpp" />
-    <ClInclude Include="tcp_server.hpp" />
+    <ClInclude Include="src\app\app.hpp" />
+    <ClInclude Include="src\networking\tcp_server.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
