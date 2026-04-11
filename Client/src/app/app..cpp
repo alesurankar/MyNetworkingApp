@@ -17,6 +17,19 @@ App::~App()
 
 void App::Run()
 {
-	std::cout << "Client is running...\n";
+	Update();
 	std::this_thread::sleep_for(std::chrono::seconds(1));
+}
+
+void App::Update()
+{
+	if (cycle >= 5) {
+		std::cout << "Stopping client...\n";
+		running_.store(false);
+		cycle = 0;
+	}
+	else {
+		std::cout << "Client is running...\n";
+		cycle++;
+	}
 }

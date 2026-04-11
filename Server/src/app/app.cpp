@@ -17,11 +17,11 @@ App::~App()
 
 void App::Run()
 {
-	UpdateLoop();
+	Update();
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 }
 
-void App::UpdateLoop()
+void App::Update()
 {
 	if (cycle >= 5) {
 		std::cout << "Stopping server...\n";

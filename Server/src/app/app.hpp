@@ -8,7 +8,7 @@ public:
 	~App();
 	void Run();
 private:
-	void UpdateLoop();
+	void Update();
 private:
 	std::atomic<bool>& running_;
 	int cycle = 0;
