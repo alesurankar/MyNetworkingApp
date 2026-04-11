@@ -3,6 +3,7 @@
 #include <Common/config.hpp>
 
 #include <boost/asio/io_context.hpp>
+#include <boost/asio/executor_work_guard.hpp>
 
 #include <atomic>
 #include <memory>
@@ -11,19 +12,20 @@
 
 int main()
 {
-	std::unique_ptr<TcpServer> server_;
-    std::atomic<bool> running_{ true };
-    App app(running_);
+    std::atomic<bool> running{ true };
+    App app(running);
 
 	boost::asio::io_context io;
-    server_ = std::make_unique<TcpServer>(io, config::ADDRESS, config::PORT);
-    server_->Accept();
+    auto work_guard = boost::asio::make_work_guard(io);
+
+    auto server = std::make_shared<TcpServer>(io, config::ADDRESS, config::PORT);
+    server->Accept();
 
     std::thread io_thread([&io]() {
         io.run();
-		});
+	    });
 
-    while (running_) {
+    while (running) {
 		app.Run();
     }
 
