@@ -13,7 +13,6 @@ class TcpClient
 {
 public:
 	TcpClient(asio::io_context& io_context, std::string_view addres, uint16_t port);
-	~TcpClient();
 	void Connect();
 private:
 	tcp::socket socket_;
