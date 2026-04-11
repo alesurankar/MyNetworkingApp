@@ -5,9 +5,9 @@
 #include <atomic>
 
 
-App::App(std::atomic<bool>& runFlag)
+App::App(std::atomic<bool>& running)
 	:
-	running_(runFlag)
+	running_(running)
 {
 }
 
@@ -25,7 +25,7 @@ void App::UpdateLoop()
 {
 	if (cycle >= 5) {
 		std::cout << "Stopping server...\n";
-		running_ = false;
+		running_.store(false);
 		cycle = 0;
 	}
 	else {

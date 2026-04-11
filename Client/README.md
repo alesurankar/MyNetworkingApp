@@ -3,9 +3,15 @@
 
 ```
 Client/
-├── main.cpp     # Entry Point
-├── app.hpp 
-├── app.cpp 
-├── tcp_client.hpp   # Client implementation using Boost.Asio
-├── tcp_client.cpp 
+├─ bin/   # Compiled binaries will be placed here
+└─ src/
+	├─ app/
+	│	├─ app.hpp
+	│	└─ app.cpp
+	│
+	├─ networking/
+	│	├─ tcp_client.hpp   # Client implementation using Boost.Asio
+	│	└─ tcp_client.cpp
+	│
+	└─ main.cpp     # Entry Point
 ```

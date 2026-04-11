@@ -4,7 +4,7 @@
 class App
 {
 public:
-	App(std::atomic<bool>& runFlag);
+	App(std::atomic<bool>& running);
 	~App();
 	void Run();
 private:

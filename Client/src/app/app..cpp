@@ -5,9 +5,9 @@
 #include <atomic>
 
 
-App::App(std::atomic<bool>& runFlag)
+App::App(std::atomic<bool>& running)
 	:
-	running_(runFlag)
+	running_(running)
 {
 }
 

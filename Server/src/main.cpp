@@ -11,7 +11,7 @@
 int main()
 {
 	std::unique_ptr<TcpServer> server_;
-    std::atomic<bool> running_ = true;
+    std::atomic<bool> running_{ true };
     App app(running_);
 
 	boost::asio::io_context io;
