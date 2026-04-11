@@ -22,6 +22,7 @@ building boost:
 ```
 MyNetworkingApp/
 ├── Controller/   # Startup launcher app
+├── Common/       # Shared files
 ├── Server/       # TCP server (Boost.Asio)
 ├── Client/       # TCP client
 ```

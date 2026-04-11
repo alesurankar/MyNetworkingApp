@@ -1,10 +1,10 @@
 #pragma once
-#include <string>
 #include <cstdint>
+#include <string_view>
 
 
 namespace config 
 {
     inline constexpr uint16_t PORT = 12345;
-    inline const std::string ADDRESS = "127.0.0.1";
+    inline constexpr std::string_view ADDRESS = "127.0.0.1";
 }

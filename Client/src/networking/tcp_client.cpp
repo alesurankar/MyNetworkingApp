@@ -3,12 +3,12 @@
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/address.hpp>
 
-#include <string>
+#include <string_view>
 #include <cstdint>
 #include <iostream>
 
 
-TcpClient::TcpClient(asio::io_context& io_context, std::string address, uint16_t port)
+TcpClient::TcpClient(asio::io_context& io_context, std::string_view address, uint16_t port)
 	:
 	socket_(io_context),
 	endpoint_(asio::ip::make_address(address), port)

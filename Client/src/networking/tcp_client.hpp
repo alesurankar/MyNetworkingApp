@@ -2,7 +2,7 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/io_context.hpp>
 
-#include <string>
+#include <string_view>
 #include <cstdint>
 
 
@@ -12,7 +12,7 @@ using tcp = asio::ip::tcp;
 class TcpClient
 {
 public:
-	TcpClient(asio::io_context& io_context, std::string addres, uint16_t port);
+	TcpClient(asio::io_context& io_context, std::string_view addres, uint16_t port);
 	~TcpClient();
 	void Connect();
 private:
