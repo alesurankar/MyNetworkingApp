@@ -1,7 +1,7 @@
 #include "tcp_client.hpp"
 
 #include <boost/asio/io_context.hpp>
-#include <boost/asio/ip/impl/address.ipp>
+#include <boost/asio/ip/address.hpp>
 
 #include <string>
 #include <cstdint>
@@ -21,5 +21,9 @@ TcpClient::~TcpClient()
 
 void TcpClient::Connect()
 {
-	std::cout << "Client is connecting...\n";
+	std::cout << "Client is connecting to "
+		<< endpoint_.address().to_string()
+		<< ":"
+		<< endpoint_.port()
+		<< "\n";
 }

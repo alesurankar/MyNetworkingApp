@@ -2,7 +2,7 @@
 
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/io_context.hpp>
-#include <boost/asio/ip/impl/address.ipp>
+#include <boost/asio/ip/address.hpp>
 
 #include <string>
 #include <iostream>
@@ -20,5 +20,9 @@ TcpServer::~TcpServer()
 
 void TcpServer::Accept()
 {
-	std::cout << "Waiting for client connection...\n";
+    std::cout << "Server listening on "
+        << acceptor_.local_endpoint().address().to_string()
+        << ":"
+        << acceptor_.local_endpoint().port()
+        << "\n";
 }

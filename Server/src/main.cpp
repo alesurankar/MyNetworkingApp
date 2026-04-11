@@ -1,5 +1,6 @@
 #include <app/app.hpp>
 #include <networking/tcp_server.hpp>
+#include <Common/config.hpp>
 
 #include <boost/asio/io_context.hpp>
 
@@ -15,7 +16,7 @@ int main()
     App app(running_);
 
 	boost::asio::io_context io;
-	server_ = std::make_unique<TcpServer>(io, "127.0.0.1", 12345);
+    server_ = std::make_unique<TcpServer>(io, config::ADDRESS, config::PORT);
     server_->Accept();
 
     std::thread io_thread([&io]() {
