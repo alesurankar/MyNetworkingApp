@@ -17,11 +17,19 @@ App::~App()
 
 void App::Run()
 {
-	int i = 0;
-	while (i < 4) {
-		std::cout << "Server is running...\n";
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-		i++;
+	UpdateLoop();
+	std::this_thread::sleep_for(std::chrono::seconds(1));
+}
+
+void App::UpdateLoop()
+{
+	if (cycle >= 5) {
+		std::cout << "Stopping server...\n";
+		running_ = false;
+		cycle = 0;
 	}
-	running_ = false;
+	else {
+		std::cout << "Server is running...\n";
+		cycle++;
+	}
 }
