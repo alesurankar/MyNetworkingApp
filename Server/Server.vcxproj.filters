@@ -24,12 +24,18 @@
     <ClCompile Include="src\networking\tcp_server.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\networking\session.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\app\app.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\networking\tcp_server.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\networking\session.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

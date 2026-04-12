@@ -6,12 +6,14 @@ Server/
 ├─ bin/   # Compiled binaries will be placed here
 └─ src/
 	├─ app/
-	│	├─ app.hpp
-	│	└─ app.cpp
+	│	├─ app.cpp
+	│	└─ app.hpp
 	│
 	├─ networking/
-	│	├─ tcp_server.hpp   # Server implementation using Boost.Asio
-	│	└─ tcp_server.cpp
+	│	├─ session.cpp
+	│	├─ session.hpp
+	│	├─ tcp_server.cpp   # Server implementation using Boost.Asio
+	│	└─ tcp_server.hpp
 	│
 	└─ main.cpp     # Entry Point
 ```
