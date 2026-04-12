@@ -16,15 +16,15 @@ TcpClient::TcpClient(asio::io_context& io_context, std::string_view address, uin
 	socket_(io_context),
 	endpoint_(asio::ip::make_address(address), port)
 {
-}
-
-void TcpClient::Connect()
-{
 	std::cout << "Client is connecting to "
 		<< endpoint_.address().to_string()
 		<< ":"
 		<< endpoint_.port()
 		<< "\n";
+}
+
+void TcpClient::Connect()
+{
 	socket_.async_connect(endpoint_, [this](error_code ec) {
 		if (!ec) {
 			std::cout << "Connected to server!\n";
