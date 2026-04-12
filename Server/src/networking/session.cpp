@@ -51,26 +51,36 @@ void Session::ReadMessage()
                 std::cout << "Received: " << msg << "\n";
                 auto response = std::make_shared<std::string>(msg + "\n");
 
-                asio::async_write(client_socket_, asio::buffer(*response),
-                    [this, self, response](error_code ec, std::size_t) {
-                        if (!ec) {
-                            std::cout << "Echo sent\n";
-                            ReadMessage();
-                        }
-                        else {
-                            std::cerr << "Write failed\n";
-                            if (auto server = server_.lock()) {
-                                server->Leave(self);
-                            }
-                        }
-                    });
+                WriteMessage(response);
+                ReadMessage();
             }
             else {
-                std::cerr << "Client disconnected\n";
-                if (auto server = server_.lock()) {
-                    server->Leave(self);
-                }
-                return;
+                HandleDisconnect(self);
             }
         });
+}
+
+void Session::WriteMessage(std::shared_ptr<std::string> msg)
+{
+    auto self = shared_from_this();
+
+    asio::async_write(client_socket_, asio::buffer(*msg),
+        [this, self, msg](error_code ec, std::size_t) {
+            if (ec) {
+                std::cerr << "Write failed\n";
+                HandleDisconnect(self);
+            }
+        });
+}
+
+void Session::HandleDisconnect(std::shared_ptr<Session> self)
+{
+    std::cerr << "Client disconnected\n";
+
+    error_code ec;
+    client_socket_.close(ec);
+
+    if (auto server = server_.lock()) {
+        server->Leave(self);
+    }
 }

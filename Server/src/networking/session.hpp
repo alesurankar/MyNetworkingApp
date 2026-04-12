@@ -19,6 +19,8 @@ public:
 	void Stop();
 private:
 	void ReadMessage();
+	void WriteMessage(std::shared_ptr<std::string> msg);
+	void HandleDisconnect(std::shared_ptr<Session> self);
 private:
 	tcp::socket client_socket_;
 	std::weak_ptr<TcpServer> server_;
