@@ -31,6 +31,7 @@ int main()
     }
 
     work_guard.reset();
+	client->Shutdown();
 	io.stop();
 
     if (io_thread.joinable()) {

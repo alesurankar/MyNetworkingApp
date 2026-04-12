@@ -20,6 +20,7 @@ public:
 	TcpClient(asio::io_context& io_context, std::string_view address, uint16_t port);
 	void Connect();
 	void Send(const std::string& message);
+	void Shutdown();
 private:
 	void CheckAndSend();
 	void ReadMessage();

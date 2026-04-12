@@ -7,6 +7,7 @@
 #include <boost/asio/write.hpp>
 #include <boost/asio/buffer.hpp>
 #include <boost/asio/post.hpp>
+#include <boost/asio/ip/tcp.hpp>
 
 #include <string_view>
 #include <cstdint>
@@ -103,5 +104,17 @@ void TcpClient::CheckAndSend()
 				CheckAndSend();
 			}
 			});
+	}
+}
+
+void TcpClient::Shutdown()
+{
+	error_code ec;
+
+	timer_.cancel();
+
+	if (socket_.is_open()) {
+		socket_.shutdown(tcp::socket::shutdown_both, ec);
+		socket_.close(ec);
 	}
 }
