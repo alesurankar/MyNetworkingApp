@@ -4,6 +4,7 @@
   </Configurations>
   <Folder Name="/Solution Items/">
     <File Path="README.md" />
+    <File Path="TODO.md" />
   </Folder>
   <Project Path="Client/Client.vcxproj" Id="17dba646-8e77-4034-bed5-d1bc295dc8f6" />
   <Project Path="Controller/Controller.vcxproj" Id="b68fd187-f907-46af-a864-e520f245d17b" />
