@@ -29,8 +29,9 @@ int main()
 		app.Run();
     }
 
-    work_guard.reset();
-    io.stop();
+    server->Stop();          // stop accept + sessions
+    work_guard.reset();      // allow io_context to finish
+    io.stop();               // stop event loop
 
     if (io_thread.joinable()) {
         io_thread.join();

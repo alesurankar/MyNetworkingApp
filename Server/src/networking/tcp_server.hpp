@@ -19,6 +19,7 @@ public:
 	TcpServer(asio::io_context& io_context, std::string_view address, uint16_t port);
 	void Accept();
 	void Leave(const std::shared_ptr<Session>& client_session);
+	void Stop();
 private:
 	void Join(const std::shared_ptr<Session>& client_session);
 private:

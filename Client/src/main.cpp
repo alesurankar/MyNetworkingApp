@@ -30,8 +30,8 @@ int main()
         app.Run();
     }
 
+    client->Shutdown();
     work_guard.reset();
-	client->Shutdown();
 	io.stop();
 
     if (io_thread.joinable()) {

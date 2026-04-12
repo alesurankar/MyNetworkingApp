@@ -37,19 +37,39 @@ void TcpServer::Accept()
             Join(session);
         }
         else {
+            if (ec == asio::error::operation_aborted) {
+                return;
+            }
             std::cerr << "Accept failed: " << ec.message() << "\n";
         }
-        Accept(); 
-        });
+        if (acceptor_.is_open()) {
+            Accept();
+        }
+    });
 }
 
 void TcpServer::Join(const std::shared_ptr<Session>& client_session)
 {
     sessions_.insert(client_session);
+    std::cout << "Client connected. Total: " << sessions_.size() << "\n";
 }
 
 void TcpServer::Leave(const std::shared_ptr<Session>& client_session)
 {
     client_session->Stop();
-    sessions_.erase(client_session);
+    sessions_.erase(client_session); 
+    std::cout << "Client disconnected. Total: " << sessions_.size() << "\n";
+}
+
+void TcpServer::Stop()
+{
+    error_code ec;
+
+    acceptor_.close(ec);
+
+    for (auto& session : sessions_) {
+        session->Stop();
+    }
+
+    sessions_.clear();
 }
