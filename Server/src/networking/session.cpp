@@ -33,10 +33,9 @@ void Session::Stop()
 {
     error_code ec;
 
-    if (client_socket_.is_open()) {
-        client_socket_.shutdown(tcp::socket::shutdown_both, ec);
-        client_socket_.close(ec);
-    }
+    client_socket_.cancel(ec);
+    client_socket_.shutdown(tcp::socket::shutdown_both, ec);
+    client_socket_.close(ec);
 }
 
 void Session::ReadMessage()
@@ -57,6 +56,12 @@ void Session::ReadMessage()
                         if (!ec) {
                             std::cout << "Echo sent\n";
                             ReadMessage();
+                        }
+                        else {
+                            std::cerr << "Write failed\n";
+                            if (auto server = server_.lock()) {
+                                server->Leave(self);
+                            }
                         }
                     });
             }
