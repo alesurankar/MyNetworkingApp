@@ -25,10 +25,12 @@ int main()
         io.run();
         });
 
-    while (running) {
+    while (running.load()) {
+        client->Send("Hello from client");
         app.Run();
     }
 
+    work_guard.reset();
 	io.stop();
 
     if (io_thread.joinable()) {

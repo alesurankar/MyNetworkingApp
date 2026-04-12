@@ -25,10 +25,11 @@ int main()
         io.run();
 	    });
 
-    while (running) {
+    while (running.load()) {
 		app.Run();
     }
 
+    work_guard.reset();
     io.stop();
 
     if (io_thread.joinable()) {
