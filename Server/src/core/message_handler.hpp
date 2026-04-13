@@ -16,5 +16,5 @@ private:
 	std::mutex mtxOut_;
 	std::string msg_;
 	std::string validResponse_;
-	std::queue<std::string> app_messages_;
+	std::queue<std::string> appMessages_;
 };

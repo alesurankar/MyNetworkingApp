@@ -1,5 +1,6 @@
 #include "session.hpp"
 #include <networking/tcp_server.hpp>
+#include <core/message_handler.hpp>
 
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/read_until.hpp>
@@ -49,10 +50,10 @@ void Session::ReadMessage()
                 std::string msg;
                 std::getline(is, msg);
 
-                std::cout << "Received: " << msg << "\n";
-                auto response = std::make_shared<std::string>(msg + "\n");
-
-                WriteMessage(response);
+                std::cout << "Step1. '" << msg << "' received from client... TcpSession::ReadMessage (networking thread)\n";
+                if (!msg.empty()) {
+                    msgHandler_->ServerToMSG(msg);
+                }
                 ReadMessage();
             }
             else {
