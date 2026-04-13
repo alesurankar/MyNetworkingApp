@@ -1,4 +1,5 @@
 #pragma once
+#define _WIN32_WINNT 0x0A00
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/streambuf.hpp>
 

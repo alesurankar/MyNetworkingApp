@@ -1,13 +1,17 @@
 #include "app.hpp"
+#include <core/message_handler.hpp>
+
 #include <iostream>
 #include <thread>
 #include <chrono>
 #include <atomic>
+#include <memory>
 
 
-App::App(std::atomic<bool>& running)
+App::App(std::atomic<bool>& running, std::shared_ptr<MessageHandler> msgHandler)
 	:
-	running_(running)
+	running_(running),
+	msgHandler_(msgHandler)
 {
 }
 
@@ -23,13 +27,5 @@ void App::Run()
 
 void App::Update()
 {
-	//if (cycle >= 5) {
-	//	std::cout << "Stopping server...\n";
-	//	running_.store(false);
-	//	cycle = 0;
-	//}
-	//else {
-		std::cout << "Server is running...\n";
-	//	cycle++;
-	//}
+	std::cout << "Server is running...\n";
 }
