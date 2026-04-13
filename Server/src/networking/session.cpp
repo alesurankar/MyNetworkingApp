@@ -1,5 +1,5 @@
-#include "Session.hpp"
-#include "tcp_server.hpp"
+#include "session.hpp"
+#include <networking/tcp_server.hpp>
 
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/read_until.hpp>
