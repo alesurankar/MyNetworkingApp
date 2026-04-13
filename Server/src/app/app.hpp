@@ -14,9 +14,12 @@ public:
 private:
 	void Update();
 	void GetMessageFromMSG();
+	void SetMessageForMSG();
 private:
 	std::atomic<bool>& running_;
+	std::atomic<bool> nextFrame_;
 	std::string message_;
 	std::shared_ptr<MessageHandler> msgHandler_;
 	std::queue<std::string> msgToUpdate_;
+	std::queue<std::string> msgIsUpdated_;
 };
