@@ -20,7 +20,7 @@ Session::Session(tcp::socket socket, std::weak_ptr<TcpServer> server, std::share
     :
     client_socket_(std::move(socket)),
     server_(server),
-    msgHandler_(msgHandler)
+    msgHandler_(std::move(msgHandler))
 {
     std::cout << "Session Constructor called\n";
 }

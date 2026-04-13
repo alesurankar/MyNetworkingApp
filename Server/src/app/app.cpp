@@ -6,12 +6,13 @@
 #include <chrono>
 #include <atomic>
 #include <memory>
+#include <utility>
 
 
 App::App(std::atomic<bool>& running, std::shared_ptr<MessageHandler> msgHandler)
 	:
 	running_(running),
-	msgHandler_(msgHandler)
+	msgHandler_(std::move(msgHandler))
 {
 }
 

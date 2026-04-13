@@ -7,7 +7,6 @@ class MessageHandler
 {
 public:
 	MessageHandler();
-
 	void ServerToMSG(const std::string& message);
 	std::string MSGToApp();
 	void AppToMSG(const std::string& response);

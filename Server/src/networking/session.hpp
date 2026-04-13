@@ -16,7 +16,7 @@ class MessageHandler;
 class Session : public std::enable_shared_from_this<Session>
 {
 public:
-	explicit Session(tcp::socket socket, std::weak_ptr<TcpServer> server, std::shared_ptr<MessageHandler> msgHandler);
+	Session(tcp::socket socket, std::weak_ptr<TcpServer> server, std::shared_ptr<MessageHandler> msgHandler);
 	void Start();
 	void Stop();
 private:

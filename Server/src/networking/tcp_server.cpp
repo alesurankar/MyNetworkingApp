@@ -20,7 +20,7 @@ using error_code = boost::system::error_code;
 TcpServer::TcpServer(asio::io_context& io_context, std::string_view address, uint16_t port, std::shared_ptr<MessageHandler> msgHandler)
 	:
 	acceptor_(io_context, tcp::endpoint(asio::ip::make_address(address), port)),
-    msgHandler_(msgHandler)
+    msgHandler_(std::move(msgHandler))
 {
     std::cout << "Server listening on "
         << acceptor_.local_endpoint().address().to_string()
