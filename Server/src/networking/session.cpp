@@ -16,10 +16,11 @@
 
 using error_code = boost::system::error_code;
 
-Session::Session(tcp::socket socket, std::weak_ptr<TcpServer> server)
+Session::Session(tcp::socket socket, std::weak_ptr<TcpServer> server, std::shared_ptr<MessageHandler> msgHandler)
     :
     client_socket_(std::move(socket)),
-    server_(server)
+    server_(server),
+    msgHandler_(msgHandler)
 {
     std::cout << "Session Constructor called\n";
 }

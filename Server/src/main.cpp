@@ -1,6 +1,7 @@
+#include <Common/config.hpp>
 #include <app/app.hpp>
 #include <networking/tcp_server.hpp>
-#include <Common/config.hpp>
+#include <core/message_handler.hpp>
 
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/executor_work_guard.hpp>
@@ -18,7 +19,8 @@ int main()
 	boost::asio::io_context io;
     auto work_guard = boost::asio::make_work_guard(io);
 
-    auto server = std::make_shared<TcpServer>(io, config::ADDRESS, config::PORT);
+    auto msgHandler = std::make_shared<MessageHandler>();
+    auto server = std::make_shared<TcpServer>(io, config::ADDRESS, config::PORT, msgHandler);
     server->Accept();
 
     std::thread io_thread([&io]() {
