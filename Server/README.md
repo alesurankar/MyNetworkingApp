@@ -9,6 +9,10 @@ Server/
 	│	├─ app.cpp
 	│	└─ app.hpp
 	│
+	├─ core/
+	│	├─ message_handler.cpp
+	│	└─ message_handler.hpp
+	│
 	├─ networking/
 	│	├─ session.cpp
 	│	├─ session.hpp
