@@ -10,3 +10,5 @@ last updated: 12.4.2026
 
 ## Unfinished Tasks
 - [ ] Implement UDP server and client using Boost.Asio
+- [ ] Extract MessageHandler into static library
+- [ ] Extract Connection into static library
