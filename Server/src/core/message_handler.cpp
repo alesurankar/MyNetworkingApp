@@ -41,8 +41,11 @@ void MessageHandler::AppToMSG(const std::string& response)
 std::string MessageHandler::MSGToServer()
 {
 	std::lock_guard<std::mutex> lock(mtxOut_);
-	std::string messageToServer = validResponse_ + "\n";
+	if (validResponse_.empty()) {
+		return "";
+	}
+	std::string messageToServer = validResponse_;
 	validResponse_.clear();
-
+	std::cout << "Step9. '" << messageToServer << "' read from server... MessageHandler::MSGToServer\n";
 	return messageToServer;
 }

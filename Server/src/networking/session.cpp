@@ -13,6 +13,7 @@
 #include <utility>
 #include <string>
 #include <memory>
+#include <chrono>
 
 
 using error_code = boost::system::error_code;
@@ -21,14 +22,19 @@ Session::Session(tcp::socket socket, std::weak_ptr<TcpServer> server, std::share
     :
     client_socket_(std::move(socket)),
     server_(server),
-    msgHandler_(std::move(msgHandler))
+    msgHandler_(std::move(msgHandler)),
+    timer_(client_socket_.get_executor())
 {
     std::cout << "Session Constructor called\n";
 }
 
 void Session::Start()
 {
+    auto self = shared_from_this();
     ReadMessage();
+    asio::post(client_socket_.get_executor(), [this, self]() {
+        CheckAndSend();
+        });
 }
 
 void Session::Stop()
@@ -45,33 +51,50 @@ void Session::ReadMessage()
     auto self = shared_from_this();
     asio::async_read_until(client_socket_, input_buffer_, '\n',
         [this, self](error_code ec, std::size_t) {
-            if (!ec) {
-                std::istream is(&input_buffer_);
-                std::string msg;
-                std::getline(is, msg);
+        if (!ec) {
+            std::istream is(&input_buffer_);
+            std::string msg;
+            std::getline(is, msg);
 
-                std::cout << "\nStep1. '" << msg << "' received from client... TcpSession::ReadMessage (networking thread)\n";
-                if (!msg.empty()) {
-                    msgHandler_->ServerToMSG(msg);
-                }
-                ReadMessage();
+            std::cout << "\nStep1. '" << msg << "' received from client... TcpSession::ReadMessage (networking thread)\n";
+            if (!msg.empty()) {
+                msgHandler_->ServerToMSG(msg);
             }
-            else {
-                HandleDisconnect(self);
-            }
+            ReadMessage();
+        }
+        else {
+            HandleDisconnect(self);
+        }
         });
 }
 
-void Session::WriteMessage(std::shared_ptr<std::string> msg)
+void Session::CheckAndSend()
 {
     auto self = shared_from_this();
+    std::string resp = msgHandler_->MSGToServer();
 
-    asio::async_write(client_socket_, asio::buffer(*msg),
-        [this, self, msg](error_code ec, std::size_t) {
-            if (ec) {
-                std::cerr << "Write failed\n";
-                HandleDisconnect(self);
+    if (resp.empty()) {
+        timer_.expires_after(std::chrono::milliseconds(10));
+        timer_.async_wait([this, self](error_code ec) {
+            if (!ec) {
+                CheckAndSend();
             }
+            });
+        return;
+    }
+
+    resp.push_back('\n');
+    auto msg = std::make_shared<std::string>(std::move(resp));
+
+    asio::async_write(client_socket_, boost::asio::buffer(*msg),
+        [this, self, msg](const boost::system::error_code& ec, std::size_t) {
+        if (!ec) {
+            std::cout << "Step10.'" << *msg << "' sent to client... Session::CheckAndSend\n";
+            CheckAndSend();
+        }
+        else {
+            HandleDisconnect(self);
+        }
         });
 }
 
