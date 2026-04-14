@@ -6,7 +6,6 @@
 #include <boost/asio/read_until.hpp>
 #include <boost/asio/write.hpp>
 #include <boost/asio/buffer.hpp>
-#include <boost/asio/post.hpp>
 #include <boost/asio/ip/tcp.hpp>
 
 #include <string_view>
@@ -44,16 +43,6 @@ void TcpClient::Connect()
 		else {
 			std::cerr << "Connect failed: " << ec.message() << "\n";
 		}
-		});
-}
-
-void TcpClient::Send(const std::string& message)
-{
-	auto self = shared_from_this();
-
-	asio::post(socket_.get_executor(), 
-		[this, self, message]() {
-			write_queue_.push_back(message + "\n");
 		});
 }
 

@@ -1,15 +1,20 @@
 #include "app.hpp"
+#include <core/message_handler.hpp>
+
 #include <iostream>
-#include <thread>
-#include <chrono>
 #include <atomic>
+#include <memory>
+#include <utility>
+#include <string>
+#include <mutex>
 
 
-App::App(std::atomic<bool>& running)
+App::App(std::atomic<bool>& running, std::shared_ptr<MessageHandler> msgHandler)
 	:
-	running_(running)
-{
-}
+	running_(running),
+	msgHandler_(std::move(msgHandler)),
+	nextFrame_(true)
+{}
 
 App::~App()
 {
@@ -17,19 +22,31 @@ App::~App()
 
 void App::Run()
 {
-	Update();
-	std::this_thread::sleep_for(std::chrono::seconds(10));
+	if (nextFrame_.load()) {
+		GetMessageFromMSG();
+		SetMessageForMSG();
+		nextFrame_.store(false);
+	}
 }
 
-void App::Update()
+void App::GetMessageFromMSG()
 {
-	//if (cycle >= 5) {
-	//	std::cout << "Stopping client...\n";
-	//	running_.store(false);
-	//	cycle = 0;
-	//}
-	//else {
-		std::cout << "Client is running...\n";
-	//	cycle++;
-	//}
+	std::string msgIn = msgHandler_->MSGToApp();
+	std::lock_guard<std::mutex> lock(mtxIn_);
+	if (!msgIn.empty()) {
+		msgToUpdate_.push(msgIn);
+		std::cout << "Step4. '" << msgIn << "' pushed to queue... App::GetMessageFromMSG (main thread)\n";
+	}
+}
+
+void App::SetMessageForMSG()
+{
+	std::string msgOut;
+	std::lock_guard<std::mutex> lock(mtxOut_);
+	if (!msgIsUpdated_.empty()) {
+		msgOut = msgIsUpdated_.front();
+		msgIsUpdated_.pop();
+		msgHandler_->AppToMSG(msgOut);
+		std::cout << "Step8. '" << msgOut << "' poped from queue... App::SetMessageForMSG (main thread)\n";
+	}
 }

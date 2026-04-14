@@ -15,7 +15,6 @@ public:
 	~App();
 	void Run();
 private:
-	void Update();
 	void GetMessageFromMSG();
 	void SetMessageForMSG();
 	void UpdateLoop();
