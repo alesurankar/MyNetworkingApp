@@ -5,10 +5,6 @@
 #include <string>
 
 
-MessageHandler::MessageHandler()
-{
-}
-
 void MessageHandler::ServerToMSG(const std::string& message)
 {
 	std::lock_guard<std::mutex> lock(mtxIn_);

@@ -9,6 +9,10 @@ Client/
 	│	├─ app.hpp
 	│	└─ app.cpp
 	│
+	├─ core/
+	│	├─ message_handler.cpp
+	│	└─ message_handler.hpp
+	│
 	├─ networking/
 	│	├─ tcp_client.hpp   # Client implementation using Boost.Asio
 	│	└─ tcp_client.cpp

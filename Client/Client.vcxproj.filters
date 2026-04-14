@@ -13,24 +13,48 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\app">
+      <UniqueIdentifier>{d26fe2af-ee7b-4b0f-9dce-8070f5a5ada2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core">
+      <UniqueIdentifier>{4388eecd-0bf0-439d-b082-a4aeaa4da060}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\networking">
+      <UniqueIdentifier>{a2c24363-9ddf-4350-b1fe-eac0475a48a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\app">
+      <UniqueIdentifier>{ed06d343-fae9-442a-9a82-f62d20dbe662}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\core">
+      <UniqueIdentifier>{d77be95a-a028-426e-aaaa-b2f56ae6e2c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\networking">
+      <UniqueIdentifier>{b6875163-594c-489a-94a6-731e99457bd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\app\app..cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\app</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\message_handler.cpp">
+      <Filter>Source Files\core</Filter>
     </ClCompile>
     <ClCompile Include="src\networking\tcp_client.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\networking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\app\app.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\app</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\message_handler.hpp">
+      <Filter>Header Files\core</Filter>
     </ClInclude>
     <ClInclude Include="src\networking\tcp_client.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\networking</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
