@@ -2,6 +2,7 @@
 #define _WIN32_WINNT 0x0A00
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/streambuf.hpp>
+#include <boost/asio/steady_timer.hpp>
 
 #include <memory>
 #include <deque>
@@ -23,9 +24,12 @@ public:
 private:
     void DoRead();
     void DoWrite();
+    void ReadMessage();
+    void CheckAndSend();
 private:
     tcp::socket socket_;
     asio::streambuf buffer_;
+    asio::steady_timer timer_;
     std::deque<std::string> writeQueue_;
     std::shared_ptr<MessageHandler> msgHandler_;
 };
