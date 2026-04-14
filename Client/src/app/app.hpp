@@ -19,8 +19,8 @@ private:
 private:
 	std::atomic<bool>& running_;
 	std::atomic<bool> nextFrame_;
-	std::mutex(mtxIn_);
-	std::mutex(mtxOut_);
+	std::mutex mtxIn_;
+	std::mutex mtxOut_;
 	std::shared_ptr<MessageHandler> msgHandler_;
 	std::queue<std::string> msgToUpdate_;
 	std::queue<std::string> msgIsUpdated_;

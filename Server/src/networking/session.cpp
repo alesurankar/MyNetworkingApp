@@ -58,7 +58,7 @@ void Session::ReadMessage()
 
             std::cout << "\nStep1. '" << msg << "' received from client... TcpSession::ReadMessage (networking thread)\n";
             if (!msg.empty()) {
-                msgHandler_->ServerToMSG(msg);
+                msgHandler_->NetToHandler(msg);
             }
             ReadMessage();
         }
@@ -71,7 +71,7 @@ void Session::ReadMessage()
 void Session::CheckAndSend()
 {
     auto self = shared_from_this();
-    std::string resp = msgHandler_->MSGToServer();
+    std::string resp = msgHandler_->HandlerToNet();
 
     if (resp.empty()) {
         timer_.expires_after(std::chrono::milliseconds(10));
