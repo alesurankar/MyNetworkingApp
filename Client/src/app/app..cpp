@@ -31,7 +31,7 @@ void App::Run()
 
 void App::GetMessageFromMSG()
 {
-	std::string msgIn = msgHandler_->MSGToApp();
+	std::string msgIn = msgHandler_->HandlerToApp();
 	std::lock_guard<std::mutex> lock(mtxIn_);
 	if (!msgIn.empty()) {
 		msgToUpdate_.push(msgIn);
@@ -46,7 +46,7 @@ void App::SetMessageForMSG()
 	if (!msgIsUpdated_.empty()) {
 		msgOut = msgIsUpdated_.front();
 		msgIsUpdated_.pop();
-		msgHandler_->AppToMSG(msgOut);
+		msgHandler_->AppToHandler(msgOut);
 		std::cout << "Step8. '" << msgOut << "' poped from queue... App::SetMessageForMSG (main thread)\n";
 	}
 }

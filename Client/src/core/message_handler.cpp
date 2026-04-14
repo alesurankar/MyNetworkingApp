@@ -5,42 +5,41 @@
 #include <string>
 
 
-void MessageHandler::AppToMSG(const std::string& message)
+void MessageHandler::AppToHandler(const std::string& message)
 {
-    std::lock_guard<std::mutex> lock(mtxIn_);
-    appMessages_.push(message);
-    std::cout << "Step2000. '" << message << "' pushed to queue... MessageHandler::AppToMSG\n";
+	std::lock_guard<std::mutex> lock(mtxAppToNet_);
+	appToNetMessages_.push(message);
+	std::cout << "Step20000. '" << message << "' pushed to queue... MessageHandler::AppToMSG\n";
 }
 
-std::string MessageHandler::MSGToClient()
+std::string MessageHandler::HandlerToNet()
 {
-    {
-        std::lock_guard<std::mutex> lock(mtxIn_);
-        if (!appMessages_.empty()) {
-            msg_ = appMessages_.front() + "\n";
-            appMessages_.pop();
-            std::cout << "Step3000. '" << msg_ << "' poped from queue... MessageHandler::MSGToClient\n";
-        }
-        else {
-            msg_.clear();
-        }
-    }
-    return msg_;
+	std::lock_guard<std::mutex> lock(mtxAppToNet_);
+	if (appToNetMessages_.empty()) {
+		return "";
+	}
+	std::string msg = std::move(appToNetMessages_.front());
+	appToNetMessages_.pop();
+	std::cout << "Step9. '" << msg << "' read from server... MessageHandler::MSGToServer\n";
+	return msg;
 }
 
-void MessageHandler::ClientToMSG(const std::string& response)
+void MessageHandler::NetToHandler(const std::string& message)
 {
-    std::lock_guard<std::mutex> lock(mtxOut_);
-    validResponse_ = response;
+	std::lock_guard<std::mutex> lock(mtxNetToApp_);
+	netToAppMessages_.push(message);
+	std::cout << "Step2. '" << message << "' pushed to queue... MessageHandler::ServerToMSG\n";
 }
 
-std::string MessageHandler::MSGToApp()
+std::string MessageHandler::HandlerToApp()
 {
-    std::lock_guard<std::mutex> lock(mtxOut_);
-    if (validResponse_.empty()) {
-        return "";
-    }
-    const std::string messageToApp = validResponse_;
-    std::cout << "Step9000. '" << messageToApp << "' read from server... MessageHandler::MSGToApp\n";
-    return messageToApp;
+	std::lock_guard<std::mutex> lock(mtxNetToApp_);
+
+	if (netToAppMessages_.empty()) {
+		return "";
+	}
+	std::string msg = std::move(netToAppMessages_.front());
+	std::cout << "Step3. '" << msg << "' poped from queue... MessageHandler::MSGToApp\n";
+	netToAppMessages_.pop();
+	return msg;
 }
