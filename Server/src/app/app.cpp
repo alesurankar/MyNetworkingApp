@@ -8,6 +8,7 @@
 #include <memory>
 #include <utility>
 #include <string>
+#include <mutex>
 
 
 App::App(std::atomic<bool>& running, std::shared_ptr<MessageHandler> msgHandler)
@@ -16,6 +17,14 @@ App::App(std::atomic<bool>& running, std::shared_ptr<MessageHandler> msgHandler)
 	msgHandler_(std::move(msgHandler)),
 	nextFrame_(true)
 {
+	updateThread_ = std::thread(&App::UpdateLoop, this);
+}
+
+App::~App()
+{
+	if (updateThread_.joinable()) {
+		updateThread_.join();
+	}
 }
 
 void App::Run()
@@ -25,25 +34,69 @@ void App::Run()
 		SetMessageForMSG();
 		nextFrame_.store(false);
 	}
-	std::this_thread::sleep_for(std::chrono::seconds(1));
 }
 
 void App::GetMessageFromMSG()
 {
 	std::string msgIn = msgHandler_->MSGToApp();
+	std::lock_guard<std::mutex> lock(mtxIn_);
 	if (!msgIn.empty()) {
 		msgToUpdate_.push(msgIn);
-		std::cout << "Step4. '"<< msgIn << "' pushed to queue... App::GetMessageFromMSG (app thread)\n\n";
+		std::cout << "Step4. '"<< msgIn << "' pushed to queue... App::GetMessageFromMSG (main thread)\n";
 	}
 }
 
 void App::SetMessageForMSG()
 {
 	std::string msgOut;
-	std::cout << "App::SetMessage(): msgIsUpdated_.size(): " << msgIsUpdated_.size() << "\n";
+	std::lock_guard<std::mutex> lock(mtxOut_);
 	if (!msgIsUpdated_.empty()) {
 		msgOut = msgIsUpdated_.front();
 		msgIsUpdated_.pop();
 		msgHandler_->AppToMSG(msgOut);
+		std::cout << "Step8. '" << msgOut << "' poped from queue... App::SetMessageForMSG (main thread)\n";
+	}
+}
+
+
+///////////////////////////////////////////////
+void App::UpdateLoop()
+{
+	while (running_.load()) {
+		TakeFromQueue();
+		UpdateParameters();
+		PushToQueue();
+
+		nextFrame_.store(true);
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+	}
+}
+
+void App::TakeFromQueue()
+{
+	std::lock_guard<std::mutex> lock(mtxIn_);
+	if (!msgToUpdate_.empty()) {
+		message_ = msgToUpdate_.front();
+		msgToUpdate_.pop();
+		std::cout << "Step5. '" << message_ << "' poped from queue... App::TakeFromQueue (update thread)\n";
+	}
+}
+
+void App::UpdateParameters()
+{
+	if (!message_.empty()) {
+		// TODO : Update parameters based on the message
+		response_ = message_ + " is processed.";
+		message_.clear();
+	}
+}
+
+void App::PushToQueue()
+{
+	std::lock_guard<std::mutex> lock(mtxOut_);
+	if (!response_.empty()) {
+		msgIsUpdated_.push(response_);
+		std::cout << "Step7. '" << response_ << "' pushed to queue... App::PushToQueue (update thread)\n";
+		response_.clear();
 	}
 }

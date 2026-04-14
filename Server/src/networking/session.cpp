@@ -50,7 +50,7 @@ void Session::ReadMessage()
                 std::string msg;
                 std::getline(is, msg);
 
-                std::cout << "Step1. '" << msg << "' received from client... TcpSession::ReadMessage (networking thread)\n";
+                std::cout << "\nStep1. '" << msg << "' received from client... TcpSession::ReadMessage (networking thread)\n";
                 if (!msg.empty()) {
                     msgHandler_->ServerToMSG(msg);
                 }
