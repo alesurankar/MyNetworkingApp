@@ -5,43 +5,41 @@
 #include <string>
 
 
-void MessageHandler::ServerToMSG(const std::string& message)
+void MessageHandler::AppToHandler(const std::string& message)
 {
-	std::lock_guard<std::mutex> lock(mtxIn_);
-	appMessages_.push(message);
+	std::lock_guard<std::mutex> lock(mtxAppToNet_);
+	appToNetMessages_.push(message);
+	std::cout << "Step20000. '" << message << "' pushed to queue... MessageHandler::AppToMSG\n";
+}
+
+std::string MessageHandler::HandlerToNet()
+{
+	std::lock_guard<std::mutex> lock(mtxAppToNet_);
+	if (appToNetMessages_.empty()) {
+		return "";
+	}
+	std::string msg = std::move(appToNetMessages_.front());
+	appToNetMessages_.pop();
+	std::cout << "Step9. '" << msg << "' read from server... MessageHandler::MSGToServer\n";
+	return msg;
+}
+
+void MessageHandler::NetToHandler(const std::string& message)
+{
+	std::lock_guard<std::mutex> lock(mtxNetToApp_);
+	netToAppMessages_.push(message);
 	std::cout << "Step2. '" << message << "' pushed to queue... MessageHandler::ServerToMSG\n";
 }
 
-std::string MessageHandler::MSGToApp()
+std::string MessageHandler::HandlerToApp()
 {
-	{
-		std::lock_guard<std::mutex> lock(mtxIn_);
-		if (!appMessages_.empty()) {
-			msg_ = appMessages_.front();
-			appMessages_.pop();
-			std::cout << "Step3. '" << msg_ << "' poped from queue... MessageHandler::MSGToApp\n";
-		}
-		else {
-			msg_.clear();
-		}
-	}
-	return msg_;
-}
+	std::lock_guard<std::mutex> lock(mtxNetToApp_);
 
-void MessageHandler::AppToMSG(const std::string& response)
-{
-	std::lock_guard<std::mutex> lock(mtxOut_);
-	validResponse_ = response;
-}
-
-std::string MessageHandler::MSGToServer()
-{
-	std::lock_guard<std::mutex> lock(mtxOut_);
-	if (validResponse_.empty()) {
+	if (netToAppMessages_.empty()) {
 		return "";
 	}
-	std::string messageToServer = validResponse_;
-	validResponse_.clear();
-	std::cout << "Step9. '" << messageToServer << "' read from server... MessageHandler::MSGToServer\n";
-	return messageToServer;
+	std::string msg = std::move(netToAppMessages_.front());
+	std::cout << "Step3. '" << msg << "' poped from queue... MessageHandler::MSGToApp\n";
+	netToAppMessages_.pop();
+	return msg;
 }
