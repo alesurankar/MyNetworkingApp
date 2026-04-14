@@ -1,4 +1,5 @@
 #include "tcp_client.hpp"
+#include <core/message_handler.hpp>
 
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/address.hpp>
@@ -18,7 +19,7 @@
 
 using error_code = boost::system::error_code;
 
-TcpClient::TcpClient(asio::io_context& io_context, std::string_view address, uint16_t port)
+TcpClient::TcpClient(asio::io_context& io_context, std::string_view address, uint16_t port, std::shared_ptr<MessageHandler> msgHandler)
 	:
 	socket_(io_context),
 	endpoint_(asio::ip::make_address(address), port),
