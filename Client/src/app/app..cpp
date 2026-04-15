@@ -1,5 +1,5 @@
 #include "app.hpp"
-#include <core/message_handler.hpp>
+#include <include/core/message_channel.hpp>
 
 #include <iostream>
 #include <thread>
@@ -10,10 +10,10 @@
 #include <string>
 
 
-App::App(std::atomic<bool>& running, std::shared_ptr<MessageHandler> msgHandler)
+App::App(std::atomic<bool>& running, std::shared_ptr<MessageChannel> msgChannel)
 	:
 	running_(running),
-	msgHandler_(std::move(msgHandler))
+	msgChannel_(std::move(msgChannel))
 {
 	inputThread_ = std::thread(&App::InputLoop, this);
 }
@@ -27,7 +27,7 @@ App::~App()
 
 void App::Run()
 {
-	std::string msg = msgHandler_->HandlerToApp();
+	std::string msg = msgChannel_->ChannelToApp();
 	if (!msg.empty()) {
 		ShowOutput(msg);
 	}
@@ -48,7 +48,7 @@ void App::InputLoop()
 		std::string msg = CaptureInput();
 		if (!msg.empty()) {
 			std::cout << "Step2. '" << msg << "' sending out from App::InputLoop\n";
-			msgHandler_->AppToHandler(msg);
+			msgChannel_->AppToChannel(msg);
 		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	}

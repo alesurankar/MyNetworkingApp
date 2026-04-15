@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\core\message_handler.hpp">
+    <ClInclude Include="include\core\message_channel.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\config.hpp">
@@ -23,7 +23,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\message_handler.cpp">
+    <ClCompile Include="src\message_channel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

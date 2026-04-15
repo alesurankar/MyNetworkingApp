@@ -1,7 +1,7 @@
-#include <Common/config.hpp>
+#include <include/config.hpp>
 #include <app/app.hpp>
 #include <networking/tcp_server.hpp>
-#include <core/message_handler.hpp>
+#include <include/core/message_channel.hpp>
 
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/executor_work_guard.hpp>
@@ -13,13 +13,13 @@
 
 int main()
 {
-    auto msgHandler = std::make_shared<MessageHandler>();
+    auto msgChannel = std::make_shared<MessageChannel>();
     std::atomic<bool> running{ true };
-    App app(running, msgHandler);
+    App app(running, msgChannel);
 
 	boost::asio::io_context io;
     auto work_guard = boost::asio::make_work_guard(io);
-    auto server = std::make_shared<TcpServer>(io, config::ADDRESS, config::PORT, msgHandler);
+    auto server = std::make_shared<TcpServer>(io, config::ADDRESS, config::PORT, msgChannel);
     server->Accept();
 
     std::thread io_thread([&io]() {

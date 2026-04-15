@@ -9,13 +9,13 @@ namespace asio = boost::asio;
 using tcp = asio::ip::tcp;
 
 class TcpServer;
-class MessageHandler;
+class MessageChannel;
 class Connection;
 
 class Session : public std::enable_shared_from_this<Session>
 {
 public:
-	Session(tcp::socket socket, std::weak_ptr<TcpServer> server, std::shared_ptr<MessageHandler> msgHandler);
+	Session(tcp::socket socket, std::weak_ptr<TcpServer> server, std::shared_ptr<MessageChannel> msgChannel);
 	void Start();
 	void Stop();
 private:

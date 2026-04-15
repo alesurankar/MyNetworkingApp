@@ -1,5 +1,5 @@
 #include "tcp_client.hpp"
-#include <core/message_handler.hpp>
+#include <include/core/message_channel.hpp>
 #include <networking/connection.hpp>
 
 #include <boost/asio/io_context.hpp>
@@ -17,11 +17,11 @@
 
 using error_code = boost::system::error_code;
 
-TcpClient::TcpClient(asio::io_context& io_context, std::string_view address, uint16_t port, std::shared_ptr<MessageHandler> msgHandler)
+TcpClient::TcpClient(asio::io_context& io_context, std::string_view address, uint16_t port, std::shared_ptr<MessageChannel> msgChannel)
 	:
 	io_context_(io_context),
 	endpoint_(asio::ip::make_address(address), port),
-	msgHandler_(std::move(msgHandler))
+	msgChannel_(std::move(msgChannel))
 {
 	std::cout << "Client is connecting to "
 		<< endpoint_.address().to_string()
@@ -39,7 +39,7 @@ void TcpClient::Connect()
 		[this, self, socket](error_code ec) {
 			if (!ec) {
 				std::cout << "Connected to server!\n";
-				connection_ = std::make_shared<Connection>(std::move(*socket), msgHandler_);
+				connection_ = std::make_shared<Connection>(std::move(*socket), msgChannel_);
 				connection_->Start();
 			}
 			else {

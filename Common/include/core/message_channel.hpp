@@ -3,14 +3,14 @@
 #include <string>
 #include <queue>
 
-class MessageHandler
+class MessageChannel
 {
 public:
-	MessageHandler() = default;
-	void AppToHandler(const std::string& response);
-	std::string HandlerToNet();
-	void NetToHandler(const std::string& message);
-	std::string HandlerToApp();
+	MessageChannel() = default;
+	void AppToChannel(const std::string& response);
+	std::string ChannelToNet();
+	void NetToChannel(const std::string& message);
+	std::string ChannelToApp();
 private:
 	std::mutex mtxAppToNet_;
 	std::mutex mtxNetToApp_;

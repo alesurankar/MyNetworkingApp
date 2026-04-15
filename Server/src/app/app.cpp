@@ -1,5 +1,5 @@
 #include "app.hpp"
-#include <core/message_handler.hpp>
+#include <include/core/message_channel.hpp>
 
 #include <iostream>
 #include <thread>
@@ -10,10 +10,10 @@
 #include <string>
 
 
-App::App(std::atomic<bool>& running, std::shared_ptr<MessageHandler> msgHandler)
+App::App(std::atomic<bool>& running, std::shared_ptr<MessageChannel> msgChannel)
 	:
 	running_(running),
-	msgHandler_(std::move(msgHandler))
+	msgChannel_(std::move(msgChannel))
 {}
 
 void App::Run()
@@ -26,7 +26,7 @@ void App::Run()
 
 void App::TakeInput()
 {
-	input_ = msgHandler_->HandlerToApp();
+	input_ = msgChannel_->ChannelToApp();
 	if (!input_.empty()) {
 		std::cout << "Received from network: " << input_ << "\n";
 	}
@@ -45,7 +45,7 @@ void App::PushOutput()
 {
 	if (!output_.empty()) {
 		std::cout << "Sending to network: " << output_ << "\n";
-		msgHandler_->AppToHandler(std::move(output_));
+		msgChannel_->AppToChannel(std::move(output_));
 		output_.clear();
 	}
 }

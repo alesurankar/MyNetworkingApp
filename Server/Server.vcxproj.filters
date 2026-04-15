@@ -16,17 +16,11 @@
     <Filter Include="Header Files\app">
       <UniqueIdentifier>{19ddeae6-39b0-427c-b71e-022d96873196}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\core">
-      <UniqueIdentifier>{6e07823e-b11b-42ce-8b08-3717b6cc8911}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\networking">
       <UniqueIdentifier>{5e706ac9-51af-4bab-912a-64bd647b0c1f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\app">
       <UniqueIdentifier>{3e31c945-76be-4ffe-9d62-07a1c7b7d1a4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\core">
-      <UniqueIdentifier>{0a75cc06-7828-4162-bd10-91aae22f753c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\networking">
       <UniqueIdentifier>{2aed1efa-af48-489e-8d3d-aacae6b40ee5}</UniqueIdentifier>

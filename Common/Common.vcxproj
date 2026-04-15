@@ -85,10 +85,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\config.hpp" />
-    <ClInclude Include="include\core\message_handler.hpp" />
+    <ClInclude Include="include\core\message_channel.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\message_handler.cpp" />
+    <ClCompile Include="src\message_channel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

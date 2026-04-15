@@ -4,12 +4,12 @@
 #include <string>
 #include <thread>
 
-class MessageHandler;
+class MessageChannel;
 
 class App
 {
 public:
-	App(std::atomic<bool>& running, std::shared_ptr<MessageHandler> msgHandler);
+	App(std::atomic<bool>& running, std::shared_ptr<MessageChannel> msgChannel);
 	~App();
 	void Run();
 private:
@@ -19,5 +19,5 @@ private:
 private:
 	std::atomic<bool>& running_;
 	std::thread inputThread_;
-	std::shared_ptr<MessageHandler> msgHandler_;
+	std::shared_ptr<MessageChannel> msgChannel_;
 };

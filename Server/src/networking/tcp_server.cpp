@@ -1,6 +1,6 @@
 #include "tcp_server.hpp"
 #include <networking/session.hpp>
-#include <core/message_handler.hpp>
+#include <include/core/message_channel.hpp>
 
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/io_context.hpp>
@@ -17,10 +17,10 @@
 
 using error_code = boost::system::error_code;
 
-TcpServer::TcpServer(asio::io_context& io_context, std::string_view address, uint16_t port, std::shared_ptr<MessageHandler> msgHandler)
+TcpServer::TcpServer(asio::io_context& io_context, std::string_view address, uint16_t port, std::shared_ptr<MessageChannel> msgChannel)
 	:
 	acceptor_(io_context, tcp::endpoint(asio::ip::make_address(address), port)),
-    msgHandler_(std::move(msgHandler))
+    msgChannel_(std::move(msgChannel))
 {
     std::cout << "Server listening on "
         << acceptor_.local_endpoint().address().to_string()
@@ -35,7 +35,7 @@ void TcpServer::Accept()
     acceptor_.async_accept(
         [this, self](error_code ec, tcp::socket socket) {
             if (!ec) {
-                auto session = std::make_shared<Session>(std::move(socket), self, msgHandler_);
+                auto session = std::make_shared<Session>(std::move(socket), self, msgChannel_);
                 session->Start();
                 Join(session);
             }

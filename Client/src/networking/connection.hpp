@@ -12,12 +12,12 @@
 namespace asio = boost::asio;
 using tcp = asio::ip::tcp;
 
-class MessageHandler;
+class MessageChannel;
 
 class Connection : public std::enable_shared_from_this<Connection>
 {
 public:
-    Connection(tcp::socket socket, std::shared_ptr<MessageHandler> msgHandler);
+    Connection(tcp::socket socket, std::shared_ptr<MessageChannel> msgChannel);
     void Start();
     void Stop();
 private:
@@ -28,5 +28,5 @@ private:
     asio::streambuf buffer_;
     asio::steady_timer timer_;
     std::deque<std::string> writeQueue_;
-    std::shared_ptr<MessageHandler> msgHandler_;
+    std::shared_ptr<MessageChannel> msgChannel_;
 };

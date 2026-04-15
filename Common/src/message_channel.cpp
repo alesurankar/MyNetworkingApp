@@ -1,17 +1,17 @@
-#include <core/message_handler.hpp>
+#include <core/message_channel.hpp>
 
 #include <mutex>
 #include <string>
 #include <utility>
 
 
-void MessageHandler::AppToHandler(const std::string& message)
+void MessageChannel::AppToChannel(const std::string& message)
 {
 	std::lock_guard<std::mutex> lock(mtxAppToNet_);
 	appToNetMessages_.push(message);
 }
 
-std::string MessageHandler::HandlerToNet()
+std::string MessageChannel::ChannelToNet()
 {
 	std::lock_guard<std::mutex> lock(mtxAppToNet_);
 	if (appToNetMessages_.empty()) {
@@ -22,13 +22,13 @@ std::string MessageHandler::HandlerToNet()
 	return msg;
 }
 
-void MessageHandler::NetToHandler(const std::string& message)
+void MessageChannel::NetToChannel(const std::string& message)
 {
 	std::lock_guard<std::mutex> lock(mtxNetToApp_);
 	netToAppMessages_.push(message);
 }
 
-std::string MessageHandler::HandlerToApp()
+std::string MessageChannel::ChannelToApp()
 {
 	std::lock_guard<std::mutex> lock(mtxNetToApp_);
 

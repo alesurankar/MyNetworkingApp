@@ -1,5 +1,5 @@
 #include "connection.hpp"
-#include <core/message_handler.hpp>
+#include <include/core/message_channel.hpp>
 
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/post.hpp>
@@ -18,11 +18,11 @@
 
 using error_code = boost::system::error_code;
 
-Connection::Connection(tcp::socket socket, std::shared_ptr<MessageHandler> msgHandler)
+Connection::Connection(tcp::socket socket, std::shared_ptr<MessageChannel> msgChannel)
     :
     socket_(std::move(socket)),
     timer_(socket_.get_executor()),
-    msgHandler_(std::move(msgHandler))
+    msgChannel_(std::move(msgChannel))
 {}
 
 void Connection::Start()
@@ -56,7 +56,7 @@ void Connection::DoRead()
                 std::getline(is, msg);
 
                 if (!msg.empty()) {
-                    msgHandler_->NetToHandler(msg);
+                    msgChannel_->NetToChannel(msg);
                 }
                 DoRead();
             }
@@ -69,7 +69,7 @@ void Connection::DoRead()
 void Connection::DoWrite()
 {
     auto self = shared_from_this();
-    std::string resp = msgHandler_->HandlerToNet();
+    std::string resp = msgChannel_->ChannelToNet();
 
     if (resp.empty()) {
         timer_.expires_after(std::chrono::milliseconds(10));
