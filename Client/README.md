@@ -10,8 +10,6 @@ Client/
 	│	└─ app.hpp
 	│
 	├─ networking/
-	│	├─ connection.cpp
-	│	├─ connection.hpp
 	│	├─ tcp_client.cpp   # Client implementation using Boost.Asio
 	│	└─ tcp_client.hpp
 	│

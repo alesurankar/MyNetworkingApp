@@ -39,9 +39,6 @@
     <ClCompile Include="src\networking\tcp_server.cpp">
       <Filter>Source Files\networking</Filter>
     </ClCompile>
-    <ClCompile Include="src\networking\connection.cpp">
-      <Filter>Source Files\networking</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\app\app.hpp">
@@ -51,9 +48,6 @@
       <Filter>Header Files\networking</Filter>
     </ClInclude>
     <ClInclude Include="src\networking\tcp_server.hpp">
-      <Filter>Header Files\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="src\networking\connection.hpp">
       <Filter>Header Files\networking</Filter>
     </ClInclude>
   </ItemGroup>

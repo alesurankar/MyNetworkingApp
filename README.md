@@ -21,8 +21,9 @@ building boost:
 
 ```
 MyNetworkingApp/
-├── Controller/   # Startup launcher app
-├── Common/       # Shared files
-├── Server/       # TCP server (Boost.Asio)
-├── Client/       # TCP client
+├── Client/       # client runtime (TcpClient, App logic)
+├── Common/       # shared logic (MessageChannel, config)
+├── Controller/   # launcher / orchestrator UI (starts processes)
+├── Networking/   # transport layer (Connection, Boost.Asio wrapper)
+├── Server/       # server runtime (Session, TcpServer, App logic)
 ```

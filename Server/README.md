@@ -10,8 +10,6 @@ Server/
 	│	└─ app.hpp
 	│
 	├─ networking/
-	│	├─ connection.cpp
-	│	├─ connection.hpp
 	│	├─ session.cpp
 	│	├─ session.hpp
 	│	├─ tcp_server.cpp   # Server implementation using Boost.Asio
