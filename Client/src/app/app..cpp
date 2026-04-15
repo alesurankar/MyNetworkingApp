@@ -25,28 +25,6 @@ App::~App()
 	}
 }
 
-
-///////////////////////////////////////////////
-// Input thread
-void App::InputLoop()
-{
-	while (running_.load()) {
-		std::string msg = CaptureInput();
-		if (!msg.empty()) {
-			msgHandler_->AppToHandler(msg);
-		}
-		std::this_thread::sleep_for(std::chrono::milliseconds(10));
-	}
-}
-
-std::string App::CaptureInput()
-{
-	return std::string();
-}
-
-
-///////////////////////////////////////////////
-// Main thread
 void App::Run()
 {
 	std::string msg = msgHandler_->HandlerToApp();
@@ -59,4 +37,27 @@ void App::Run()
 void App::ShowOutput(const std::string& msg)
 {
 	std::cout << "output: " << msg << "\n";
+}
+
+
+///////////////////////////////////////////////
+// Input thread
+void App::InputLoop()
+{
+	while (running_.load()) {
+		std::string msg = CaptureInput();
+		if (!msg.empty()) {
+			std::cout << "Step2. '" << msg << "' sending out from App::InputLoop\n";
+			msgHandler_->AppToHandler(msg);
+		}
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	}
+}
+
+std::string App::CaptureInput()
+{
+	std::string input;
+	std::cin >> input;
+	std::cout << "Step1. '" << input << "' captured in App::CaptureInput\n";
+	return input;
 }

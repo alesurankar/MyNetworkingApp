@@ -9,7 +9,6 @@
 #include <boost/asio/read_until.hpp>
 #include <boost/asio/buffer.hpp>
 
-#include <iostream>
 #include <utility>
 #include <string>
 #include <memory>
@@ -56,7 +55,6 @@ void Connection::DoRead()
                 std::string msg;
                 std::getline(is, msg);
 
-                std::cout << "\nStep1. '" << msg << "' received from network... Connection::DoRead (networking thread)\n";
                 if (!msg.empty()) {
                     msgHandler_->NetToHandler(msg);
                 }
@@ -90,7 +88,6 @@ void Connection::DoWrite()
     asio::async_write(socket_, asio::buffer(*msg),
         [this, self, msg](const error_code& ec, std::size_t) {
             if (!ec) {
-                std::cout << "Step10.'" << *msg << "' sent to network... Connection::DoWrite\n";
                 DoWrite();
             }
             else {

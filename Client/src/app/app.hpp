@@ -13,9 +13,9 @@ public:
 	~App();
 	void Run();
 private:
+	void ShowOutput(const std::string& msg);
 	void InputLoop();
 	std::string CaptureInput();
-	void ShowOutput(const std::string& msg);
 private:
 	std::atomic<bool>& running_;
 	std::thread inputThread_;

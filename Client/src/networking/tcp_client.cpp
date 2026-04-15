@@ -51,6 +51,7 @@ void TcpClient::Connect()
 void TcpClient::Shutdown()
 {
 	if (connection_) {
+		std::cout << "Stoping connection\n";
 		connection_->Stop();
 	}
 }
