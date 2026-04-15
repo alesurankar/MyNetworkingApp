@@ -49,7 +49,7 @@
       <Filter>Source Files\networking</Filter>
     </ClCompile>
     <ClCompile Include="src\networking\connection.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\networking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -66,7 +66,7 @@
       <Filter>Header Files\networking</Filter>
     </ClInclude>
     <ClInclude Include="src\networking\connection.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\networking</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
