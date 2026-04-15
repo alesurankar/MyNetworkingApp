@@ -44,6 +44,9 @@
     <ClInclude Include="src\networking\tcp_client.hpp">
       <Filter>Header Files\networking</Filter>
     </ClInclude>
+    <ClInclude Include="src\message.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

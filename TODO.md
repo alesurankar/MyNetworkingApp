@@ -12,4 +12,4 @@ last updated: 15.4.2026
 
 ## Unfinished Tasks
 - [ ] Implement UDP server and client using Boost.Asio
-- [ ] implement some client ID to identify clients on the server side
+- [ ] implement client ID to identify clients on the server side
