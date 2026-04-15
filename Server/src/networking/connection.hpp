@@ -24,8 +24,6 @@ public:
 private:
     void DoRead();
     void DoWrite();
-    void ReadMessage();
-    void CheckAndSend();
 private:
     tcp::socket socket_;
     asio::streambuf buffer_;
