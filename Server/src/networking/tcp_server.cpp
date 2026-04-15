@@ -37,7 +37,7 @@ void TcpServer::Accept()
             if (!ec) {
                 uint64_t id = nextClientId_++;
                 auto session = std::make_shared<Session>(std::move(socket), self, msgChannel_, id);
-                sessions_[id] = session;
+                sessions_[id] = session;    //Store session under client ID in the map
                 session->Start();
             }
             else {

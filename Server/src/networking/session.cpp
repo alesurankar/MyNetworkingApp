@@ -6,16 +6,20 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/system/error_code.hpp>
 
+#include <iostream>
 #include <utility>
 #include <memory>
+#include <cstdint>
 
 
 using error_code = boost::system::error_code;
 
-Session::Session(tcp::socket socket, std::weak_ptr<TcpServer> server, std::shared_ptr<MessageChannel> msgChannel)
+Session::Session(tcp::socket socket, std::weak_ptr<TcpServer> server, std::shared_ptr<MessageChannel> msgChannel, uint64_t id)
     :
-    server_(server)
+    server_(server),
+    id_(id)
 {
+    std::cout << "Session created with ID: " << id_ << "\n";
     connection_ = std::make_shared<Connection>(std::move(socket), msgChannel);
 }
 
@@ -27,4 +31,9 @@ void Session::Start()
 void Session::Stop()
 {
     connection_->Stop();
+}
+
+uint64_t Session::GetId() const
+{
+    return id_;
 }
