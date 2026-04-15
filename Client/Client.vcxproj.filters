@@ -39,9 +39,6 @@
     <ClCompile Include="src\app\app..cpp">
       <Filter>Source Files\app</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\message_handler.cpp">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
     <ClCompile Include="src\networking\tcp_client.cpp">
       <Filter>Source Files\networking</Filter>
     </ClCompile>
@@ -52,9 +49,6 @@
   <ItemGroup>
     <ClInclude Include="src\app\app.hpp">
       <Filter>Header Files\app</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\message_handler.hpp">
-      <Filter>Header Files\core</Filter>
     </ClInclude>
     <ClInclude Include="src\networking\tcp_client.hpp">
       <Filter>Header Files\networking</Filter>

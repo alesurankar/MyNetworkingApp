@@ -90,13 +90,11 @@
   <ItemGroup>
     <ClCompile Include="src\app\app.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\core\message_handler.cpp" />
     <ClCompile Include="src\networking\connection.cpp" />
     <ClCompile Include="src\networking\session.cpp" />
     <ClCompile Include="src\networking\tcp_server.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\core\message_handler.hpp" />
     <ClInclude Include="src\app\app.hpp" />
     <ClInclude Include="src\networking\connection.hpp" />
     <ClInclude Include="src\networking\session.hpp" />

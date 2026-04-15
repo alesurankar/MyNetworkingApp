@@ -9,10 +9,6 @@ Client/
 	│	├─ app.cpp
 	│	└─ app.hpp
 	│
-	├─ core/
-	│	├─ message_handler.cpp
-	│	└─ message_handler.hpp
-	│
 	├─ networking/
 	│	├─ connection.cpp
 	│	├─ connection.hpp
