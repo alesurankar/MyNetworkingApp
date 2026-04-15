@@ -35,9 +35,10 @@ void TcpServer::Accept()
     acceptor_.async_accept(
         [this, self](error_code ec, tcp::socket socket) {
             if (!ec) {
-                auto session = std::make_shared<Session>(std::move(socket), self, msgChannel_);
+                uint64_t id = nextClientId_++;
+                auto session = std::make_shared<Session>(std::move(socket), self, msgChannel_, id);
+                sessions_[id] = session;
                 session->Start();
-                Join(session);
             }
             else {
                 if (ec == asio::error::operation_aborted) {
@@ -51,25 +52,18 @@ void TcpServer::Accept()
         });
 }
 
-void TcpServer::Join(const std::shared_ptr<Session>& client_session)
+void TcpServer::Leave(uint64_t id)
 {
-    sessions_.insert(client_session);
-    std::cout << "Client connected. Total: " << sessions_.size() << "\n";
-}
-
-void TcpServer::Leave(const std::shared_ptr<Session>& client_session)
-{
-    client_session->Stop();
-    sessions_.erase(client_session); 
+    sessions_.erase(id);
     std::cout << "Client disconnected. Total: " << sessions_.size() << "\n";
 }
 
 void TcpServer::Stop()
 {
     error_code ec;
-    acceptor_.close(ec);
 
-    for (auto& session : sessions_) {
+    acceptor_.close(ec);
+    for (auto& [id, session] : sessions_) {
         session->Stop();
     }
     sessions_.clear();
