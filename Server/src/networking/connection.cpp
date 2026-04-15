@@ -49,18 +49,6 @@ void Connection::Stop()
     socket_.close(ec);
 }
 
-void Connection::Send(const std::string& msg)
-{
-    msgHandler_->AppToHandler(msg);
-
-    auto self = shared_from_this();
-    asio::post(socket_.get_executor(),
-        [this, self]()
-        {
-            DoWrite();
-        });
-}
-
 void Connection::DoRead()
 {
     auto self = shared_from_this();

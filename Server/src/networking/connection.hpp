@@ -20,7 +20,6 @@ public:
     Connection(tcp::socket socket, std::shared_ptr<MessageHandler> msgHandler);
     void Start();
     void Stop();
-    void Send(const std::string& msg);
 private:
     void DoRead();
     void DoWrite();
