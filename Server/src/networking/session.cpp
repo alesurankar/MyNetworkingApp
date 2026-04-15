@@ -1,7 +1,7 @@
 #include "session.hpp"
 #include <networking/tcp_server.hpp>
 #include <include/core/message_channel.hpp>
-#include <networking/connection.hpp>
+#include <include/networking/connection.hpp>
 
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/system/error_code.hpp>

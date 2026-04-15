@@ -58,7 +58,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\aleur\Desktop\Libraries\boost_1_90_0;$(ProjectDir)/src;$(SolutionDir);..\Common</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aleur\Desktop\Libraries\boost_1_90_0;$(ProjectDir)/src;$(SolutionDir);..\Common;..\Networking</AdditionalIncludeDirectories>
       <FloatingPointModel>Fast</FloatingPointModel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -79,7 +79,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\aleur\Desktop\Libraries\boost_1_90_0;$(ProjectDir)/src;$(SolutionDir);..\Common</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aleur\Desktop\Libraries\boost_1_90_0;$(ProjectDir)/src;$(SolutionDir);..\Common;..\Networking</AdditionalIncludeDirectories>
       <FloatingPointModel>Fast</FloatingPointModel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -106,6 +106,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">
       <Project>{080ac412-7e33-464a-aa87-cd118603c4ef}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Networking\Networking.vcxproj">
+      <Project>{e5c1f63e-903f-4938-ad98-b643df11c88a}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,4 +1,4 @@
-#include "connection.hpp"
+#include <networking/connection.hpp>
 #include <include/core/message_channel.hpp>
 
 #include <boost/asio/ip/tcp.hpp>

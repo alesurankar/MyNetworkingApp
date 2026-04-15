@@ -1,6 +1,6 @@
 #include "tcp_client.hpp"
 #include <include/core/message_channel.hpp>
-#include <networking/connection.hpp>
+#include <include/networking/connection.hpp>
 
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/address.hpp>

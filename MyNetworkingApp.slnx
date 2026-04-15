@@ -9,6 +9,10 @@
   <Project Path="Client/Client.vcxproj" Id="17dba646-8e77-4034-bed5-d1bc295dc8f6" />
   <Project Path="Common/Common.vcxproj" Id="080ac412-7e33-464a-aa87-cd118603c4ef" />
   <Project Path="Controller/Controller.vcxproj" Id="b68fd187-f907-46af-a864-e520f245d17b" />
-  <Project Path="Networking/Networking.vcxproj" Id="e5c1f63e-903f-4938-ad98-b643df11c88a" />
-  <Project Path="Server/Server.vcxproj" Id="2171d2fc-760d-4342-aeed-32efefe6057f" />
+  <Project Path="Networking/Networking.vcxproj" Id="e5c1f63e-903f-4938-ad98-b643df11c88a">
+    <BuildDependency Project="Common/Common.vcxproj" />
+  </Project>
+  <Project Path="Server/Server.vcxproj" Id="2171d2fc-760d-4342-aeed-32efefe6057f">
+    <BuildDependency Project="Networking/Networking.vcxproj" />
+  </Project>
 </Solution>
