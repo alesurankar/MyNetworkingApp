@@ -2,20 +2,17 @@
 #define _WIN32_WINNT 0x0A00
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/io_context.hpp>
-#include <boost/asio/streambuf.hpp>
-#include <boost/asio/steady_timer.hpp>
 
 #include <string_view>
 #include <cstdint>
 #include <memory>
-#include <string>
-#include <deque>
 
 
 namespace asio = boost::asio;
 using tcp = asio::ip::tcp;
 
 class MessageHandler;
+class Connection;
 
 class TcpClient : public std::enable_shared_from_this<TcpClient>
 {
@@ -24,13 +21,8 @@ public:
 	void Connect();
 	void Shutdown();
 private:
-	void CheckAndSend();
-	void ReadMessage();
-private:
-	tcp::socket socket_;
+	asio::io_context& io_context_;
 	tcp::endpoint endpoint_;
-	asio::streambuf input_buffer_;
-	std::deque<std::string> write_queue_;
-	asio::steady_timer timer_;
 	std::shared_ptr<MessageHandler> msgHandler_;
+	std::shared_ptr<Connection> connection_;
 };
