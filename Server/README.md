@@ -1,4 +1,12 @@
 
+# Server (Application)
+
+This project is the **server application** of the system.
+
+It accepts TCP connections from clients, manages sessions,
+and processes messages using the shared Networking and Common layers.
+
+
 ## Project Structure
 
 ```

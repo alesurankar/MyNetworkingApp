@@ -1,4 +1,12 @@
 
+# Client (Application)
+
+This project is the **client application** of the system.
+
+It connects to the Server over TCP using the Networking library
+and processes user input and server responses through the App layer.
+
+
 ## Project Structure
 
 ```
