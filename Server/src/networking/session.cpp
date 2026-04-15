@@ -28,14 +28,3 @@ void Session::Stop()
 {
     connection_->Stop();
 }
-
-//void Session::HandleDisconnect(std::shared_ptr<Session> self)
-//{
-//    std::cerr << "Client disconnected\n";
-//
-//    error_code ec;
-//
-//    if (auto server = server_.lock()) {
-//        server->Leave(self);
-//    }
-//}

@@ -1,6 +1,7 @@
 #include "app.hpp"
 #include <core/message_handler.hpp>
 
+#include <iostream>
 #include <thread>
 #include <chrono>
 #include <atomic>
@@ -40,6 +41,7 @@ void App::InputLoop()
 
 std::string App::CaptureInput()
 {
+	return std::string();
 }
 
 
@@ -56,4 +58,5 @@ void App::Run()
 
 void App::ShowOutput(const std::string& msg)
 {
+	std::cout << "output: " << msg << "\n";
 }

@@ -35,18 +35,16 @@ void TcpClient::Connect()
 	auto self = shared_from_this();
 	auto socket = std::make_shared<tcp::socket>(io_context_);
 
-	socket->async_connect(endpoint_, [this, self, socket](error_code ec) {
-		if (!ec) {
-			std::cout << "Connected to server!\n";
-			connection_ = std::make_shared<Connection>(
-				std::move(*socket),
-				msgHandler_);
-
-			connection_->Start();
-		}
-		else {
-			std::cerr << "Connect failed: " << ec.message() << "\n";
-		}
+	socket->async_connect(endpoint_, 
+		[this, self, socket](error_code ec) {
+			if (!ec) {
+				std::cout << "Connected to server!\n";
+				connection_ = std::make_shared<Connection>(std::move(*socket), msgHandler_);
+				connection_->Start();
+			}
+			else {
+				std::cerr << "Connect failed: " << ec.message() << "\n";
+			}
 		});
 }
 

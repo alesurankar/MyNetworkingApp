@@ -19,8 +19,6 @@ public:
 	void Start();
 	void Stop();
 private:
-	//void HandleDisconnect(std::shared_ptr<Session> self);
-private:
 	std::weak_ptr<TcpServer> server_;
 	std::shared_ptr<Connection> connection_;
 };

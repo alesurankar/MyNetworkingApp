@@ -24,9 +24,7 @@ Connection::Connection(tcp::socket socket, std::shared_ptr<MessageHandler> msgHa
 	socket_(std::move(socket)),
     timer_(socket_.get_executor()),
     msgHandler_(std::move(msgHandler))
-{
-
-}
+{}
 
 void Connection::Start()
 {
@@ -34,8 +32,7 @@ void Connection::Start()
 
     auto self = shared_from_this();
     asio::post(socket_.get_executor(),
-        [this, self]()
-        {
+        [this, self]() {
             DoWrite();
         });
 }
@@ -78,10 +75,11 @@ void Connection::DoWrite()
 
     if (resp.empty()) {
         timer_.expires_after(std::chrono::milliseconds(10));
-        timer_.async_wait([this, self](error_code ec) {
-            if (!ec) {
-                DoWrite();
-            }
+        timer_.async_wait(
+            [this, self](error_code ec) {
+                if (!ec) {
+                    DoWrite();
+                }
             });
         return;
     }
