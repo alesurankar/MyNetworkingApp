@@ -1,23 +1,20 @@
 #pragma once
 #include <atomic>
-#include <memory>
 #include <string>
 
-
-class MessageChannel;
 
 class App
 {
 public:
-	App(std::atomic<bool>& running, std::shared_ptr<MessageChannel> msgChannel);
+	App(std::atomic<bool>& running);
+	void OnMessage(const std::string& msg);
 	void Run();
 private:
-	void TakeInput();
 	void Process();
-	void PushOutput();
 private:
 	std::atomic<bool>& running_;
-	std::string input_;
 	std::string output_;
-	std::shared_ptr<MessageChannel> msgChannel_;
+	std::string current_;
+	std::string pending_;
+	bool hasNewMessage_ = false;
 };

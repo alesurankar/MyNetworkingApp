@@ -1,10 +1,7 @@
 #include <networking/connection.hpp>
-#include <include/core/message_channel.hpp>
 
 #include <boost/asio/ip/tcp.hpp>
-#include <boost/asio/post.hpp>
 #include <boost/system/error_code.hpp>
-#include <boost/asio/steady_timer.hpp>
 #include <boost/asio/write.hpp>
 #include <boost/asio/read_until.hpp>
 #include <boost/asio/buffer.hpp>
@@ -13,27 +10,19 @@
 #include <string>
 #include <memory>
 #include <istream>
-#include <chrono>
 
 
 using error_code = boost::system::error_code;
 
-Connection::Connection(tcp::socket socket, std::shared_ptr<MessageChannel> msgChannel)
+Connection::Connection(tcp::socket socket)
     :
     socket_(std::move(socket)),
-    timer_(socket_.get_executor()),
-    msgChannel_(std::move(msgChannel))
+    timer_(socket_.get_executor())
 {}
 
 void Connection::Start()
 {
     DoRead();
-
-    auto self = shared_from_this();
-    asio::post(socket_.get_executor(),
-        [this, self]() {
-            DoWrite();
-        });
 }
 
 void Connection::Stop()
@@ -67,41 +56,7 @@ void Connection::DoRead()
                 std::istream is(&buffer_);
                 std::string msg;
                 std::getline(is, msg);
-
-                if (!msg.empty()) {
-                    msgChannel_->NetToChannel(msg);
-                }
                 DoRead();
-            }
-            else {
-                Stop();
-            }
-        });
-}
-
-void Connection::DoWrite()
-{
-    auto self = shared_from_this();
-    std::string resp = msgChannel_->ChannelToNet();
-
-    if (resp.empty()) {
-        timer_.expires_after(std::chrono::milliseconds(10));
-        timer_.async_wait(
-            [this, self](error_code ec) {
-                if (!ec) {
-                    DoWrite();
-                }
-            });
-        return;
-    }
-
-    resp.push_back('\n');
-    auto msg = std::make_shared<std::string>(std::move(resp));
-
-    asio::async_write(socket_, asio::buffer(*msg),
-        [this, self, msg](const error_code& ec, std::size_t) {
-            if (!ec) {
-                DoWrite();
             }
             else {
                 Stop();

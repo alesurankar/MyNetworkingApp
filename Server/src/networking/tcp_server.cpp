@@ -1,6 +1,5 @@
 #include "tcp_server.hpp"
 #include <networking/session.hpp>
-#include <include/core/message_channel.hpp>
 
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/io_context.hpp>
@@ -17,10 +16,9 @@
 
 using error_code = boost::system::error_code;
 
-TcpServer::TcpServer(asio::io_context& io_context, std::string_view address, uint16_t port, std::shared_ptr<MessageChannel> msgChannel)
+TcpServer::TcpServer(asio::io_context& io_context, std::string_view address, uint16_t port)
 	:
-	acceptor_(io_context, tcp::endpoint(asio::ip::make_address(address), port)),
-    msgChannel_(std::move(msgChannel))
+	acceptor_(io_context, tcp::endpoint(asio::ip::make_address(address), port))
 {
     std::cout << "Server listening on "
         << acceptor_.local_endpoint().address().to_string()
@@ -36,7 +34,7 @@ void TcpServer::Accept()
         [this, self](error_code ec, tcp::socket socket) {
             if (!ec) {
                 uint64_t id = nextClientId_++;
-                auto session = std::make_shared<Session>(std::move(socket), self, msgChannel_, id);
+                auto session = std::make_shared<Session>(std::move(socket), self, id);
                 sessions_[id] = session;    //Store session under client ID in the map
                 session->Start();
                 session->Send("ID:" + std::to_string(id));

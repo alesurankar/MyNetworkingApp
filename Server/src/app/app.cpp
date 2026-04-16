@@ -1,51 +1,35 @@
 #include "app.hpp"
-#include <include/core/message_channel.hpp>
 
-#include <iostream>
-#include <thread>
-#include <chrono>
 #include <atomic>
-#include <memory>
 #include <utility>
 #include <string>
 
 
-App::App(std::atomic<bool>& running, std::shared_ptr<MessageChannel> msgChannel)
+App::App(std::atomic<bool>& running)
 	:
-	running_(running),
-	msgChannel_(std::move(msgChannel))
+	running_(running)
 {}
 
 void App::Run()
 {
-	TakeInput();
-	Process();
-	PushOutput();
-	std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    if (hasNewMessage_) {
+        current_ = std::move(pending_);
+        hasNewMessage_ = false;
+    }
+
+    Process();
 }
 
-void App::TakeInput()
+void App::OnMessage(const std::string& msg)
 {
-	input_ = msgChannel_->ChannelToApp();
-	if (!input_.empty()) {
-		std::cout << "Received from network: " << input_ << "\n";
-	}
+    pending_ = msg;
+    hasNewMessage_ = true;
 }
 
 void App::Process()
 {
-	// TODO : Update parameters based on the message
-	if (!input_.empty()) {
-		output_ = input_ + " is processed.";
-		input_.clear();
-	}
-}
-
-void App::PushOutput()
-{
-	if (!output_.empty()) {
-		std::cout << "Sending to network: " << output_ << "\n";
-		msgChannel_->AppToChannel(std::move(output_));
-		output_.clear();
-	}
+    if (!current_.empty()) {
+        output_ = current_ + " is processed.";
+        current_.clear();
+    }
 }

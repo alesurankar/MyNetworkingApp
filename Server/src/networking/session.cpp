@@ -1,6 +1,5 @@
 #include "session.hpp"
 #include <networking/tcp_server.hpp>
-#include <include/core/message_channel.hpp>
 #include <include/networking/connection.hpp>
 
 #include <boost/asio/ip/tcp.hpp>
@@ -14,13 +13,13 @@
 
 using error_code = boost::system::error_code;
 
-Session::Session(tcp::socket socket, std::weak_ptr<TcpServer> server, std::shared_ptr<MessageChannel> msgChannel, uint64_t id)
+Session::Session(tcp::socket socket, std::weak_ptr<TcpServer> server, uint64_t id)
     :
     server_(server),
     id_(id)
 {
     std::cout << "Session created with ID: " << id_ << "\n";
-    connection_ = std::make_shared<Connection>(std::move(socket), msgChannel);
+    connection_ = std::make_shared<Connection>(std::move(socket));
 }
 
 void Session::Start()

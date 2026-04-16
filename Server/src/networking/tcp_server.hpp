@@ -13,12 +13,11 @@ namespace asio = boost::asio;
 using tcp = asio::ip::tcp;
 
 class Session;
-class MessageChannel;
 
 class TcpServer : public std::enable_shared_from_this<TcpServer>
 {
 public:
-	TcpServer(asio::io_context& io_context, std::string_view address, uint16_t port, std::shared_ptr<MessageChannel> msgChannel);
+	TcpServer(asio::io_context& io_context, std::string_view address, uint16_t port);
 	void Accept();
 	void Leave(uint64_t id);
 	void Stop();
@@ -26,5 +25,4 @@ private:
 	tcp::acceptor acceptor_;
 	uint64_t nextClientId_ = 0;
 	std::unordered_map<uint64_t, std::shared_ptr<Session>> sessions_;
-	std::shared_ptr<MessageChannel> msgChannel_; 
 };
