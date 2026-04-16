@@ -46,6 +46,11 @@ void Connection::Send(const std::string& msg)
         });
 }
 
+void Connection::SetMessageHandler(MessageHandler handler)
+{
+    onMessage_ = std::move(handler);
+}
+
 void Connection::DoRead()
 {
     auto self = shared_from_this();
@@ -55,6 +60,10 @@ void Connection::DoRead()
                 std::istream is(&buffer_);
                 std::string msg;
                 std::getline(is, msg);
+
+                if (onMessage_) {
+                    onMessage_(msg);
+                }
                 DoRead();
             }
             else {

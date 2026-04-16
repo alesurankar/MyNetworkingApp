@@ -53,3 +53,8 @@ void TcpClient::Shutdown()
 		connection_->Stop();
 	}
 }
+
+void TcpClient::SetMessageHandler(std::function<void(const std::string&)> handler)
+{
+	onMessage_ = std::move(handler);
+}

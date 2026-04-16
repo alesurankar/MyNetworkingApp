@@ -1,10 +1,8 @@
 #include "app.hpp"
 
-#include <iostream>
-#include <thread>
-#include <chrono>
 #include <atomic>
 #include <string>
+#include <utility>
 
 
 App::App(std::atomic<bool>& running)
@@ -14,36 +12,29 @@ App::App(std::atomic<bool>& running)
 
 void App::Run()
 {
-	std::string msg;
-	if (!msg.empty()) {
-		ShowOutput(msg);
-	}
-	std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	Process();
 }
 
-void App::ShowOutput(const std::string& msg)
+void App::OnInput(const std::string& msg)
 {
-	std::cout << "output: " << msg << "\n";
+	inbox_.push(msg);
 }
 
-
-///////////////////////////////////////////////
-// Input thread
-void App::InputLoop()
+void App::SetOutputHandler(OutHandler handler)
 {
-	while (running_.load()) {
-		std::string msg = CaptureInput();
-		if (!msg.empty()) {
-			std::cout << "Step2. '" << msg << "' sending out from App::InputLoop\n";
-		}
-		std::this_thread::sleep_for(std::chrono::milliseconds(10));
-	}
+    out_ = std::move(handler);
 }
 
-std::string App::CaptureInput()
+void App::Process()
 {
-	std::string input;
-	std::cin >> input;
-	std::cout << "Step1. '" << input << "' captured in App::CaptureInput\n";
-	return input;
+    while (!inbox_.empty()) {
+        current_ = inbox_.front();
+        inbox_.pop();
+
+        std::string response = "processed: " + current_;
+
+        if (out_) {
+            out_(response);
+        }
+    }
 }

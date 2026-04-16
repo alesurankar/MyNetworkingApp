@@ -1,17 +1,24 @@
 #pragma once
 #include <atomic>
 #include <string>
+#include <queue>
+#include <functional>
 
 
 class App
 {
 public:
-	App(std::atomic<bool>& running);
-	void Run();
+    using OutHandler = std::function<void(const std::string&)>;
+
+    App(std::atomic<bool>& running);
+    void Run();
+    void OnInput(const std::string& msg);
+    void SetOutputHandler(OutHandler handler);
 private:
-	void ShowOutput(const std::string& msg);
-	void InputLoop();
-	std::string CaptureInput();
+    void Process();
 private:
-	std::atomic<bool>& running_;
+    std::atomic<bool>& running_;
+    std::queue<std::string> inbox_;
+    std::string current_;
+    OutHandler out_;
 };
