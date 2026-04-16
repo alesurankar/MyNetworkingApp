@@ -13,7 +13,8 @@ It is used by both the Client and Server applications.
 Networking/
 ├─ include/
 │	└─ networking/
-│		└─ connection.hpp
+│		├─ connection.hpp
+│		└─ message.hpp
 │
 └─ src/
 	└─ connection.cpp

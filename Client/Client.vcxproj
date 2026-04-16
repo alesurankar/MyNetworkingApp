@@ -98,7 +98,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\app\app.hpp" />
-    <ClInclude Include="src\message.hpp" />
     <ClInclude Include="src\networking\tcp_client.hpp" />
   </ItemGroup>
   <ItemGroup>

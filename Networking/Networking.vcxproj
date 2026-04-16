@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\networking\connection.hpp" />
+    <ClInclude Include="include\networking\message.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

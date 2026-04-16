@@ -23,6 +23,9 @@
     <ClInclude Include="include\networking\connection.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\networking\message.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
