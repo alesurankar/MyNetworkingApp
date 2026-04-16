@@ -16,8 +16,7 @@ using error_code = boost::system::error_code;
 
 Connection::Connection(tcp::socket socket)
     :
-    socket_(std::move(socket)),
-    timer_(socket_.get_executor())
+    socket_(std::move(socket))
 {}
 
 void Connection::Start()

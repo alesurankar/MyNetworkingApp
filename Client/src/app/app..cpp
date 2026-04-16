@@ -1,33 +1,20 @@
 #include "app.hpp"
-#include <include/core/message_channel.hpp>
 
 #include <iostream>
 #include <thread>
 #include <chrono>
 #include <atomic>
-#include <memory>
-#include <utility>
 #include <string>
 
 
-App::App(std::atomic<bool>& running, std::shared_ptr<MessageChannel> msgChannel)
+App::App(std::atomic<bool>& running)
 	:
-	running_(running),
-	msgChannel_(std::move(msgChannel))
-{
-	inputThread_ = std::thread(&App::InputLoop, this);
-}
-
-App::~App()
-{
-	if (inputThread_.joinable()) {
-		inputThread_.join();
-	}
-}
+	running_(running)
+{}
 
 void App::Run()
 {
-	std::string msg = msgChannel_->ChannelToApp();
+	std::string msg;
 	if (!msg.empty()) {
 		ShowOutput(msg);
 	}
@@ -48,7 +35,6 @@ void App::InputLoop()
 		std::string msg = CaptureInput();
 		if (!msg.empty()) {
 			std::cout << "Step2. '" << msg << "' sending out from App::InputLoop\n";
-			msgChannel_->AppToChannel(msg);
 		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	}

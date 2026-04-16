@@ -11,18 +11,16 @@
 namespace asio = boost::asio;
 using tcp = asio::ip::tcp;
 
-class MessageChannel;
 class Connection;
 
 class TcpClient : public std::enable_shared_from_this<TcpClient>
 {
 public:
-	TcpClient(asio::io_context& io_context, std::string_view address, uint16_t port, std::shared_ptr<MessageChannel> msgChannel);
+	TcpClient(asio::io_context& io_context, std::string_view address, uint16_t port);
 	void Connect();
 	void Shutdown();
 private:
 	asio::io_context& io_context_;
 	tcp::endpoint endpoint_;
-	std::shared_ptr<MessageChannel> msgChannel_;
 	std::shared_ptr<Connection> connection_;
 };

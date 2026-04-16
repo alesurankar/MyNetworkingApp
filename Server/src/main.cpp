@@ -19,11 +19,9 @@ int main()
         config::ADDRESS,
         config::PORT
     );
-
     server->Accept();
 
     App app(running);
-
     while (running.load())
     {
         io.poll();
