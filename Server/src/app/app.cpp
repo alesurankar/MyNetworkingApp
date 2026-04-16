@@ -1,5 +1,6 @@
 #include "app.hpp"
 
+#include <iostream>
 #include <atomic>
 #include <utility>
 #include <string>
@@ -22,6 +23,7 @@ void App::Run()
 
 void App::OnMessage(const std::string& msg)
 {
+    std::cout << "MSG RECEIVED: " << msg << "\n";
     pending_ = msg;
     hasNewMessage_ = true;
 }

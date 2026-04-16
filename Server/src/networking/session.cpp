@@ -24,6 +24,13 @@ Session::Session(tcp::socket socket, std::weak_ptr<TcpServer> server, uint64_t i
 
 void Session::Start()
 {
+    connection_->SetMessageHandler(
+        [this](const std::string& msg) {
+            if (auto server = server_.lock()) {
+                server->OnMessage(id_, msg);
+            }
+        });
+
     connection_->Start();
 }
 

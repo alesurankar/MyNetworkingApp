@@ -19,11 +19,23 @@ int main()
         config::ADDRESS, 
         config::PORT
     );
-	client->Connect();
 
     App app(running);
+
+    client->SetMessageHandler(
+        [&](const std::string& msg) {
+            app.OnInput(msg);
+        });
+
+    app.SetOutputHandler(
+        [&](const std::string& msg) {
+            client->Send(msg);
+        });
+
+    client->Connect();
+
     while (running.load()) {
-        io.poll();
+        io.run_one();
         app.Run();
     }
 

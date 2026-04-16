@@ -19,6 +19,7 @@ class TcpServer : public std::enable_shared_from_this<TcpServer>
 public:
 	TcpServer(asio::io_context& io_context, std::string_view address, uint16_t port);
 	void Accept();
+	void OnMessage(uint64_t id, const std::string& msg);
 	void Leave(uint64_t id);
 	void Stop();
 private:

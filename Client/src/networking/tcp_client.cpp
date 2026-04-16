@@ -38,6 +38,12 @@ void TcpClient::Connect()
 			if (!ec) {
 				std::cout << "Connected to server!\n";
 				connection_ = std::make_shared<Connection>(std::move(*socket));
+
+				connection_->SetMessageHandler(
+					[this](const std::string& msg) {
+						if (onMessage_)
+							onMessage_(msg);
+					});
 				connection_->Start();
 			}
 			else {
@@ -57,4 +63,11 @@ void TcpClient::Shutdown()
 void TcpClient::SetMessageHandler(std::function<void(const std::string&)> handler)
 {
 	onMessage_ = std::move(handler);
+}
+
+void TcpClient::Send(const std::string& msg)
+{
+	if (connection_) {
+		connection_->Send(msg);
+	}
 }

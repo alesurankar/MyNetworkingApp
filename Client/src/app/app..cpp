@@ -1,5 +1,6 @@
 #include "app.hpp"
 
+#include <iostream>
 #include <atomic>
 #include <string>
 #include <utility>
@@ -17,6 +18,7 @@ void App::Run()
 
 void App::OnInput(const std::string& msg)
 {
+    std::cout << "MSG RECEIVED: " << msg << "\n";
 	inbox_.push(msg);
 }
 

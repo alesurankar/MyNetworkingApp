@@ -24,7 +24,7 @@ int main()
     App app(running);
     while (running.load())
     {
-        io.poll();
+        io.run_one();
         app.Run();
     }
 

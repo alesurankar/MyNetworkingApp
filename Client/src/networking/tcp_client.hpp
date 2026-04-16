@@ -22,6 +22,7 @@ public:
 	void Connect();
 	void Shutdown();
 	void SetMessageHandler(std::function<void(const std::string&)> handler);
+	void Send(const std::string& msg);
 private:
 	asio::io_context& io_context_;
 	tcp::endpoint endpoint_;

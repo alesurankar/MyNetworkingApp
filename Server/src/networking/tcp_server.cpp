@@ -51,6 +51,11 @@ void TcpServer::Accept()
         });
 }
 
+void TcpServer::OnMessage(uint64_t id, const std::string& msg)
+{
+    std::cout << "Client " << id << ": " << msg << "\n";
+}
+
 void TcpServer::Leave(uint64_t id)
 {
     sessions_.erase(id);
