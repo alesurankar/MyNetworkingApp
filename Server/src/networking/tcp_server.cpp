@@ -39,6 +39,7 @@ void TcpServer::Accept()
                 auto session = std::make_shared<Session>(std::move(socket), self, msgChannel_, id);
                 sessions_[id] = session;    //Store session under client ID in the map
                 session->Start();
+                session->Send("ID:" + std::to_string(id));
             }
             else {
                 if (ec == asio::error::operation_aborted) {

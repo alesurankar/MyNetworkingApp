@@ -45,6 +45,19 @@ void Connection::Stop()
     socket_.close(ec);
 }
 
+void Connection::Send(const std::string& msg)
+{
+    auto self = shared_from_this();
+    auto message = std::make_shared<std::string>(msg + "\n");
+
+    asio::async_write(socket_, asio::buffer(*message),
+        [this, self, message](const error_code& ec, std::size_t) {
+            if (ec) {
+                Stop();
+            }
+        });
+}
+
 void Connection::DoRead()
 {
     auto self = shared_from_this();

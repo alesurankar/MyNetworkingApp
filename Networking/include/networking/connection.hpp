@@ -18,7 +18,8 @@ class Connection : public std::enable_shared_from_this<Connection>
 public:
     Connection(tcp::socket socket, std::shared_ptr<MessageChannel> msgChannel);
     void Start();
-    void Stop();
+    void Stop(); 
+    void Send(const std::string& msg);
 private:
     void DoRead();
     void DoWrite();

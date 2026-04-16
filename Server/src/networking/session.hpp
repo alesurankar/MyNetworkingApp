@@ -4,6 +4,7 @@
 
 #include <memory>
 #include <cstdint>
+#include <string>
 
 
 namespace asio = boost::asio;
@@ -20,6 +21,7 @@ public:
 	void Start();
 	void Stop();
 	uint64_t GetId() const;
+	void Send(const std::string& msg);
 private:
 	uint64_t id_;
 	std::weak_ptr<TcpServer> server_;

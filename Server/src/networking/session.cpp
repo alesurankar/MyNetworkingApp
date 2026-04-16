@@ -37,3 +37,8 @@ uint64_t Session::GetId() const
 {
     return id_;
 }
+
+void Session::Send(const std::string& msg)
+{
+    connection_->Send(msg);
+}
