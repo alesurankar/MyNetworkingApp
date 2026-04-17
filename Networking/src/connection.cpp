@@ -35,20 +35,12 @@ void Connection::Stop()
 
 void Connection::Send(const std::string& msg)
 {
-    auto self = shared_from_this();
-    auto message = std::make_shared<std::string>(msg + "\n");
+    bool writing = !writeQueue_.empty();
+    writeQueue_.push_back(msg + "\n");
 
-    asio::async_write(socket_, asio::buffer(*message),
-        [this, self, message](const error_code& ec, std::size_t) {
-            if (ec) {
-                Stop();
-            }
-        });
-}
-
-void Connection::SetMessageHandler(MessageHandler handler)
-{
-    onMessage_ = std::move(handler);
+    if (!writing) {
+        DoWrite();
+    }
 }
 
 void Connection::DoRead()
@@ -70,4 +62,28 @@ void Connection::DoRead()
                 Stop();
             }
         });
+}
+
+void Connection::DoWrite()
+{
+    auto self = shared_from_this();
+
+    asio::async_write(socket_, asio::buffer(writeQueue_.front()),
+        [this, self](error_code ec, std::size_t) {
+            if (!ec) {
+                writeQueue_.pop_front();
+                if (!writeQueue_.empty()) {
+                    DoWrite();
+                }
+            }
+            else {
+                Stop();
+            }
+        });
+}
+
+// callbacks
+void Connection::SetMessageHandler(MessageHandler handler)
+{
+    onMessage_ = std::move(handler);
 }

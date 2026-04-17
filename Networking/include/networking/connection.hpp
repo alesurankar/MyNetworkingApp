@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 #include <functional>
+#include <deque>
 
 
 namespace asio = boost::asio;
@@ -22,8 +23,10 @@ public:
     void SetMessageHandler(MessageHandler handler);
 private:
     void DoRead();
+	void DoWrite();
 private:
     tcp::socket socket_;
     asio::streambuf buffer_;
     MessageHandler onMessage_;
+    std::deque<std::string> writeQueue_;
 };
