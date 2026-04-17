@@ -18,14 +18,16 @@ class Connection;
 class TcpClient : public std::enable_shared_from_this<TcpClient>
 {
 public:
+	using MessageHandler = std::function<void(const std::string&)>;
+
 	TcpClient(asio::io_context& io_context, std::string_view address, uint16_t port);
 	void Connect();
 	void Shutdown();
 	void Send(const std::string& msg);
-	void SetMessageHandler(std::function<void(const std::string&)> handler);
+	void SetMessageHandler(MessageHandler handler);
 private:
 	asio::io_context& io_context_;
 	tcp::endpoint endpoint_;
 	std::shared_ptr<Connection> connection_;
-	std::function<void(const std::string&)> onMessage_;
+	MessageHandler onMessage_;
 };

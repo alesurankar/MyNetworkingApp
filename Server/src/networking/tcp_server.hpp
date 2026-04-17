@@ -19,14 +19,17 @@ class Session;
 class TcpServer : public std::enable_shared_from_this<TcpServer>
 {
 public:
+	using MessageHandler = std::function<void(uint64_t, std::string)>;
+
 	TcpServer(asio::io_context& io_context, std::string_view address, uint16_t port);
 	void Accept();
 	void Leave(uint64_t id);
 	void Stop();
 	void OnMessage(uint64_t id, const std::string& msg);
-	void SetMessageHandler(std::function<void(uint64_t, const std::string&)> handler);
+	void SetMessageHandler(MessageHandler handler);
 private:
 	tcp::acceptor acceptor_;
 	uint64_t nextClientId_ = 0;
 	std::unordered_map<uint64_t, std::shared_ptr<Session>> sessions_;
+	MessageHandler onMessage_;
 };

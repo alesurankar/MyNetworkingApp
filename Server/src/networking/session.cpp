@@ -1,5 +1,4 @@
 #include "session.hpp"
-#include <networking/tcp_server.hpp>
 #include <include/networking/connection.hpp>
 
 #include <boost/asio/ip/tcp.hpp>
@@ -13,9 +12,8 @@
 
 using error_code = boost::system::error_code;
 
-Session::Session(tcp::socket socket, std::weak_ptr<TcpServer> server, uint64_t id)
+Session::Session(tcp::socket socket, uint64_t id)
     :
-    server_(server),
     id_(id)
 {
     std::cout << "Session created with ID: " << id_ << "\n";
@@ -26,8 +24,8 @@ void Session::Start()
 {
     connection_->SetMessageHandler(
         [this](const std::string& msg) {
-            if (auto server = server_.lock()) {
-                server->OnMessage(id_, msg);
+            if (onMessage_) {
+                onMessage_(id_, msg);
             }
         });
 
@@ -47,4 +45,9 @@ uint64_t Session::GetId() const
 void Session::Send(const std::string& msg)
 {
     connection_->Send(msg);
+}
+
+void Session::SetMessageHandler(MessageHandler handler)
+{
+    onMessage_ = std::move(handler);
 }

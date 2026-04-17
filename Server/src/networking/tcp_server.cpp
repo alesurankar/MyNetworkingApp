@@ -35,8 +35,18 @@ void TcpServer::Accept()
         [this, self](error_code ec, tcp::socket socket) {
             if (!ec) {
                 uint64_t id = nextClientId_++;
-                auto session = std::make_shared<Session>(std::move(socket), self, id);
+                auto session = std::make_shared<Session>(std::move(socket), id);
                 sessions_[id] = session;    //Store session under client ID in the map
+
+                session->SetMessageHandler(
+                    [self](uint64_t id, const std::string& msg) {
+                        self->OnMessage(id, msg);
+                    });
+
+                session->SetDisconnectHandler(
+                    [this](uint64_t id) {
+                        Leave(id);
+                    });
                 session->Start();
                 session->Send("ID:" + std::to_string(id));
             }
@@ -72,9 +82,13 @@ void TcpServer::Stop()
 void TcpServer::OnMessage(uint64_t id, const std::string& msg)
 {
     std::cout << "Client " << id << ": " << msg << "\n";
+    if (onMessage_) {
+        onMessage_(id, msg);
+    }
 }
 
 // callbacks
-void TcpServer::SetMessageHandler(std::function<void(uint64_t, const std::string&)> handler)
+void TcpServer::SetMessageHandler(MessageHandler handler)
 {
+    onMessage_ = std::move(handler);
 }

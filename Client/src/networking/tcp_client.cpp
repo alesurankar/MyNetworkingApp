@@ -69,7 +69,7 @@ void TcpClient::Send(const std::string& msg)
 
 
 //Callbacks
-void TcpClient::SetMessageHandler(std::function<void(const std::string&)> handler)
+void TcpClient::SetMessageHandler(MessageHandler handler)
 {
 	onMessage_ = std::move(handler);
 }
