@@ -14,13 +14,13 @@ int main()
     boost::asio::io_context io;
 
     auto server = std::make_shared<TcpServer>(io, config::ADDRESS, config::PORT);
-    App app;
+    auto app = std::make_shared<App>();
 
-    server->SetMessageHandler([&](uint64_t id, const std::string& msg) {
-            app.OnMessage(id, msg);
+    server->SetMessageHandler([app](uint64_t id, const std::string& msg) {
+            app->OnMessage(id, msg);
         });
 
-    app.SetShutdownHandler([&]() {
+    app->SetShutdownHandler([server, &io]() {
             server->Stop();
             io.stop();
         });

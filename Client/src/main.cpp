@@ -19,29 +19,29 @@ int main()
     std::atomic<bool> running{ true };
 
     auto client = std::make_shared<TcpClient>(io, config::ADDRESS, config::PORT);
-    App app;
+    auto app = std::make_shared<App>();
 
-    client->SetMessageHandler([&](const std::string& msg) {
-            app.OnNetworkMessage(msg);
+    client->SetMessageHandler([app](const std::string& msg) {
+            app->OnNetworkMessage(msg);
         });
 
-    app.SetSendHandler([&](const std::string& msg) {
+    app->SetSendHandler([client](const std::string& msg) {
             client->Send(msg);
         });
 
-    app.SetShutdownHandler([&]() {
-            running.store(false);
+    app->SetShutdownHandler([client, &io, &running]() {
             client->Shutdown();
             io.stop();
+            running.store(false);
         });
 
     client->Connect();
 
-    std::thread inputThread([&]() {
+    std::thread inputThread([app, &io, &running]() {
         std::string msg;
-        while (running && std::getline(std::cin, msg)) {
-            asio::post(io, [&app, msg]() {
-                    app.OnUserInput(msg);
+        while (running.load() && std::getline(std::cin, msg)) {
+            asio::post(io, [app, msg]() {
+                    app->OnUserInput(msg);
                 });
         }
         });
