@@ -30,11 +30,19 @@ void Session::Open()
             }
         });
 
+    connection_->SetDisconnectHandler(
+        [this]() {
+            if (onDisconnect_) {
+                onDisconnect_(id_);
+            }
+        });
+
     connection_->Open();
 }
 
 void Session::Close()
 {
+    std::cout << "Closing client session with ID: "<< id_ << "\n";
     connection_->Close();
 }
 
