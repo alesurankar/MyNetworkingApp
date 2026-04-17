@@ -25,12 +25,12 @@ int main()
             app.OnNetworkMessage(msg);
         });
 
-    app.SetOutputHandler([&](const std::string& msg) {
+    app.SetSendHandler([&](const std::string& msg) {
             client->Send(msg);
         });
 
     app.SetShutdownHandler([&]() {
-		    running.store(false);
+            running.store(false);
             io.stop();
         });
 

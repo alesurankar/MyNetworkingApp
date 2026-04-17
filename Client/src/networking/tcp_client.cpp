@@ -60,14 +60,16 @@ void TcpClient::Shutdown()
 	}
 }
 
-void TcpClient::SetMessageHandler(std::function<void(const std::string&)> handler)
-{
-	onMessage_ = std::move(handler);
-}
-
 void TcpClient::Send(const std::string& msg)
 {
 	if (connection_) {
 		connection_->Send(msg);
 	}
+}
+
+
+//Callbacks
+void TcpClient::SetMessageHandler(std::function<void(const std::string&)> handler)
+{
+	onMessage_ = std::move(handler);
 }

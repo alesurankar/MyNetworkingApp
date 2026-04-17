@@ -21,8 +21,8 @@ public:
 	TcpClient(asio::io_context& io_context, std::string_view address, uint16_t port);
 	void Connect();
 	void Shutdown();
-	void SetMessageHandler(std::function<void(const std::string&)> handler);
 	void Send(const std::string& msg);
+	void SetMessageHandler(std::function<void(const std::string&)> handler);
 private:
 	asio::io_context& io_context_;
 	tcp::endpoint endpoint_;

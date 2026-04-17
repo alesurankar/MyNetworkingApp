@@ -22,7 +22,6 @@ public:
     void SetMessageHandler(MessageHandler handler);
 private:
     void DoRead();
-    void DoWrite();
 private:
     tcp::socket socket_;
     asio::streambuf buffer_;
