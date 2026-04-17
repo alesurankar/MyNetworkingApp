@@ -44,7 +44,7 @@ void TcpClient::Connect()
 						if (onMessage_)
 							onMessage_(msg);
 					});
-				connection_->Start();
+				connection_->Open();
 			}
 			else {
 				std::cerr << "Connect failed: " << ec.message() << "\n";
@@ -56,7 +56,7 @@ void TcpClient::Shutdown()
 {
 	if (connection_) {
 		std::cout << "Stoping connection\n";
-		connection_->Stop();
+		connection_->Close();
 	}
 }
 

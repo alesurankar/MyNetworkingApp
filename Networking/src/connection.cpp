@@ -19,12 +19,12 @@ Connection::Connection(tcp::socket socket)
     socket_(std::move(socket))
 {}
 
-void Connection::Start()
+void Connection::Open()
 {
     DoRead();
 }
 
-void Connection::Stop()
+void Connection::Close()
 {
     error_code ec;
 
@@ -59,7 +59,10 @@ void Connection::DoRead()
                 DoRead();
             }
             else {
-                Stop();
+                if (onDisconnect_) {
+                    onDisconnect_();
+                }
+                Close();
             }
         });
 }
@@ -80,7 +83,7 @@ void Connection::DoWrite()
                 if (onDisconnect_) {
                     onDisconnect_();
                 }
-                Stop();
+                Close();
             }
         });
 }

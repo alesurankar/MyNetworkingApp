@@ -21,7 +21,7 @@ Session::Session(tcp::socket socket, uint64_t id)
     connection_ = std::make_shared<Connection>(std::move(socket));
 }
 
-void Session::Start()
+void Session::Open()
 {
     connection_->SetMessageHandler(
         [this](const std::string& msg) {
@@ -30,12 +30,12 @@ void Session::Start()
             }
         });
 
-    connection_->Start();
+    connection_->Open();
 }
 
-void Session::Stop()
+void Session::Close()
 {
-    connection_->Stop();
+    connection_->Close();
 }
 
 uint64_t Session::GetId() const

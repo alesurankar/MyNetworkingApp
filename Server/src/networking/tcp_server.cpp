@@ -45,9 +45,9 @@ void TcpServer::Accept()
 
                 session->SetDisconnectHandler(
                     [this](uint64_t id) {
-                        Leave(id);
+                        RemoveClient(id);
                     });
-                session->Start();
+                session->Open();
                 session->Send("ID:" + std::to_string(id));
             }
             else {
@@ -62,10 +62,10 @@ void TcpServer::Accept()
         });
 }
 
-void TcpServer::Leave(uint64_t id)
+void TcpServer::RemoveClient(uint64_t id)
 {
     sessions_.erase(id);
-    std::cout << "Client disconnected. Total: " << sessions_.size() << "\n";
+    std::cout << "Client removed. Total: " << sessions_.size() << "\n";
 }
 
 void TcpServer::Stop()
@@ -74,7 +74,7 @@ void TcpServer::Stop()
 
     acceptor_.close(ec);
     for (auto& [id, session] : sessions_) {
-        session->Stop();
+        session->Close();
     }
     sessions_.clear();
 }

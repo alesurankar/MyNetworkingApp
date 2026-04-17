@@ -20,8 +20,8 @@ public:
 	using DisconnectHandler = std::function<void(uint64_t)>;
 
 	Session(tcp::socket socket, uint64_t id);
-	void Start();
-	void Stop();
+	void Open();
+	void Close();
 	uint64_t GetId() const;
 	void Send(const std::string& msg);
 	void SetMessageHandler(MessageHandler handler);

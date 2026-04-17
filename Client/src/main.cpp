@@ -47,7 +47,6 @@ int main()
         });
 
     io.run();
-
     inputThread.join();
 
     return 0;

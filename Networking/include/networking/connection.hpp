@@ -18,8 +18,8 @@ public:
     using DisconnectHandler = std::function<void()>;
 
     Connection(tcp::socket socket);
-    void Start();
-    void Stop();
+    void Open();
+    void Close();
     void Send(const std::string& msg);
     void SetMessageHandler(MessageHandler handler);
     void SetDisconnectHandler(DisconnectHandler handler);
