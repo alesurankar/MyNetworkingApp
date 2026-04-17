@@ -1,15 +1,9 @@
 #include "app.hpp"
 
 #include <iostream>
-#include <atomic>
 #include <string>
 #include <utility>
 
-
-App::App(std::atomic<bool>& running)
-	:
-	running_(running)
-{}
 
 void App::Run()
 {
@@ -19,6 +13,13 @@ void App::Run()
 void App::OnInput(const std::string& msg)
 {
     std::cout << "MSG RECEIVED: " << msg << "\n";
+    if (msg == "quit") {
+        if (onShutdown_) {
+            onShutdown_();
+        }
+        return;
+    }
+
 	inbox_.push(msg);
 }
 
@@ -39,4 +40,9 @@ void App::Process()
             out_(response);
         }
     }
+}
+
+void App::SetShutdownHandler(std::function<void()> handler)
+{
+    onShutdown_ = std::move(handler);
 }
