@@ -8,6 +8,7 @@
 #include <utility>
 #include <memory>
 #include <cstdint>
+#include <string>
 
 
 using error_code = boost::system::error_code;
@@ -50,4 +51,9 @@ void Session::Send(const std::string& msg)
 void Session::SetMessageHandler(MessageHandler handler)
 {
     onMessage_ = std::move(handler);
+}
+
+void Session::SetDisconnectHandler(DisconnectHandler handler)
+{
+    onDisconnect_ = std::move(handler);
 }

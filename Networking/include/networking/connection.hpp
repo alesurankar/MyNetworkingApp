@@ -15,12 +15,14 @@ class Connection : public std::enable_shared_from_this<Connection>
 {
 public:
     using MessageHandler = std::function<void(const std::string&)>;
+    using DisconnectHandler = std::function<void()>;
 
     Connection(tcp::socket socket);
     void Start();
     void Stop();
     void Send(const std::string& msg);
     void SetMessageHandler(MessageHandler handler);
+    void SetDisconnectHandler(DisconnectHandler handler);
 private:
     void DoRead();
 	void DoWrite();
@@ -28,5 +30,6 @@ private:
     tcp::socket socket_;
     asio::streambuf buffer_;
     MessageHandler onMessage_;
+    DisconnectHandler onDisconnect_;
     std::deque<std::string> writeQueue_;
 };

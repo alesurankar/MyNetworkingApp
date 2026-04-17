@@ -77,6 +77,9 @@ void Connection::DoWrite()
                 }
             }
             else {
+                if (onDisconnect_) {
+                    onDisconnect_();
+                }
                 Stop();
             }
         });
@@ -86,4 +89,9 @@ void Connection::DoWrite()
 void Connection::SetMessageHandler(MessageHandler handler)
 {
     onMessage_ = std::move(handler);
+}
+
+void Connection::SetDisconnectHandler(DisconnectHandler handler)
+{
+    onDisconnect_ = std::move(handler);
 }
