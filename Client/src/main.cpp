@@ -22,7 +22,7 @@ int main()
     App app;
 
     client->SetMessageHandler([&](const std::string& msg) {
-            app.OnInput(msg);
+            app.OnNetworkMessage(msg);
         });
 
     app.SetOutputHandler([&](const std::string& msg) {
@@ -40,7 +40,7 @@ int main()
         std::string msg;
         while (running && std::getline(std::cin, msg)) {
             asio::post(io, [&app, msg]() {
-                    app.OnInput(msg);
+                    app.OnUserInput(msg);
                 });
         }
         });

@@ -3,16 +3,12 @@
 #include <iostream>
 #include <string>
 #include <utility>
+#include <functional>
 
 
-void App::Run()
+void App::OnUserInput(const std::string& msg)
 {
-	Process();
-}
-
-void App::OnInput(const std::string& msg)
-{
-    std::cout << "MSG RECEIVED: " << msg << "\n";
+    std::cout << "Sending to server: " << msg << "\n";
     if (msg == "quit") {
         if (onShutdown_) {
             onShutdown_();
@@ -20,26 +16,25 @@ void App::OnInput(const std::string& msg)
         return;
     }
 
-	inbox_.push(msg);
+    if (out_) {
+        out_(msg);
+    }
+}
+
+void App::OnNetworkMessage(const std::string& msg)
+{
+    std::cout << "Received from server: " << msg << "\n";
+    if (msg == "quit") {
+        if (onShutdown_) {
+            onShutdown_();
+        }
+        return;
+    }
 }
 
 void App::SetOutputHandler(OutHandler handler)
 {
     out_ = std::move(handler);
-}
-
-void App::Process()
-{
-    while (!inbox_.empty()) {
-        current_ = inbox_.front();
-        inbox_.pop();
-
-        std::string response = "processed: " + current_;
-
-        if (out_) {
-            out_(response);
-        }
-    }
 }
 
 void App::SetShutdownHandler(std::function<void()> handler)
