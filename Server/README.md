@@ -3,8 +3,15 @@
 
 This project is the **server application** of the system.
 
-It accepts TCP connections from clients, manages sessions,
-and processes messages using the shared Networking and Common layers.
+It is built on an **event-driven architecture** using Boost.Asio.
+
+The server:
+- accepts TCP connections asynchronously
+- manages client sessions
+- processes messages via callbacks (event handlers)
+- runs on a single `io_context` event loop
+
+There are no blocking network operations; all I/O is event-based.
 
 
 ## Project Structure

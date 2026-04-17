@@ -3,8 +3,16 @@
 
 This project is the **client application** of the system.
 
-It connects to the Server over TCP using the Networking library
-and processes user input and server responses through the App layer.
+It is built on an **event-driven architecture** using Boost.Asio.
+
+The client:
+- connects to the server asynchronously
+- handles incoming messages via callbacks
+- sends user input via posted events into the io_context
+- processes everything through a single event loop
+
+User input is forwarded into the system using `asio::post`, integrating
+console input into the event-driven model.
 
 
 ## Project Structure
