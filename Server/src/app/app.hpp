@@ -1,20 +1,21 @@
 #pragma once
-#include <atomic>
 #include <string>
+#include <functional>
+#include <cstdint>
 
 
 class App
 {
 public:
-	App(std::atomic<bool>& running);
-	void OnMessage(const std::string& msg);
-	void Run();
+	using MessageHandler = std::function<void(const std::string&)>;
+
+	void OnMessage(uint64_t id, const std::string& msg);
+	void SetShutdownHandler(std::function<void()> handler);
 private:
-	void Process();
-private:
-	std::atomic<bool>& running_;
 	std::string output_;
 	std::string current_;
 	std::string pending_;
 	bool hasNewMessage_ = false;
+	MessageHandler onMessage_;
+	std::function<void()> onShutdown_;
 };

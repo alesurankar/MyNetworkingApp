@@ -31,6 +31,7 @@ int main()
 
     app.SetShutdownHandler([&]() {
             running.store(false);
+            client->Shutdown();
             io.stop();
         });
 
@@ -48,7 +49,6 @@ int main()
     io.run();
 
     inputThread.join();
-    client->Shutdown();
 
     return 0;
 }

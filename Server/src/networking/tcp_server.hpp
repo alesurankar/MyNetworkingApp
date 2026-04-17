@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <memory>
 #include <unordered_map>
+#include <string>
+#include <functional>
 
 
 namespace asio = boost::asio;
@@ -19,9 +21,10 @@ class TcpServer : public std::enable_shared_from_this<TcpServer>
 public:
 	TcpServer(asio::io_context& io_context, std::string_view address, uint16_t port);
 	void Accept();
-	void OnMessage(uint64_t id, const std::string& msg);
 	void Leave(uint64_t id);
 	void Stop();
+	void OnMessage(uint64_t id, const std::string& msg);
+	void SetMessageHandler(std::function<void(uint64_t, const std::string&)> handler);
 private:
 	tcp::acceptor acceptor_;
 	uint64_t nextClientId_ = 0;

@@ -1,15 +1,10 @@
 #include "app.hpp"
 
 #include <iostream>
-#include <atomic>
 #include <utility>
 #include <string>
+#include <cstdint>
 
-
-App::App(std::atomic<bool>& running)
-	:
-	running_(running)
-{}
 
 void App::Run()
 {
@@ -21,9 +16,9 @@ void App::Run()
     Process();
 }
 
-void App::OnMessage(const std::string& msg)
+void App::OnMessage(uint64_t id, const std::string& msg)
 {
-    std::cout << "MSG RECEIVED: " << msg << "\n";
+    std::cout << "MSG RECEIVED from " << id << ": " << msg << "\n";
     pending_ = msg;
     hasNewMessage_ = true;
 }

@@ -12,6 +12,7 @@
 #include <utility>
 #include <memory>
 #include <string>
+#include <functional>
 
 
 using error_code = boost::system::error_code;
@@ -51,11 +52,6 @@ void TcpServer::Accept()
         });
 }
 
-void TcpServer::OnMessage(uint64_t id, const std::string& msg)
-{
-    std::cout << "Client " << id << ": " << msg << "\n";
-}
-
 void TcpServer::Leave(uint64_t id)
 {
     sessions_.erase(id);
@@ -71,4 +67,14 @@ void TcpServer::Stop()
         session->Stop();
     }
     sessions_.clear();
+}
+
+void TcpServer::OnMessage(uint64_t id, const std::string& msg)
+{
+    std::cout << "Client " << id << ": " << msg << "\n";
+}
+
+// callbacks
+void TcpServer::SetMessageHandler(std::function<void(uint64_t, const std::string&)> handler)
+{
 }

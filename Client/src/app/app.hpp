@@ -12,6 +12,6 @@ public:
     void SetSendHandler(SendHandler handler);
     void SetShutdownHandler(std::function<void()> handler);
 private:
-    SendHandler send_;
+    SendHandler onSend_;
     std::function<void()> onShutdown_;
 };

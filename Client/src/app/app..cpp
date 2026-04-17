@@ -16,8 +16,8 @@ void App::OnUserInput(const std::string& msg)
         return;
     }
 
-    if (send_) {
-        send_(msg);
+    if (onSend_) {
+        onSend_(msg);
     }
 }
 
@@ -35,7 +35,7 @@ void App::OnNetworkMessage(const std::string& msg)
 // Callbacks
 void App::SetSendHandler(SendHandler handler)
 {
-    send_ = std::move(handler);
+    onSend_ = std::move(handler);
 }
 
 void App::SetShutdownHandler(std::function<void()> handler)

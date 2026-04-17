@@ -4,31 +4,29 @@
 
 #include <boost/asio/io_context.hpp>
 
-#include <atomic>
 #include <memory>
+#include <string>
+#include <cstdint>
 
 
 int main()
 {
-    std::atomic<bool> running{ true };
-
     boost::asio::io_context io;
 
-    auto server = std::make_shared<TcpServer>(
-        io,
-        config::ADDRESS,
-        config::PORT
-    );
+    auto server = std::make_shared<TcpServer>(io, config::ADDRESS, config::PORT);
+    App app;
+
+    server->SetMessageHandler([&](uint64_t id, const std::string& msg) {
+            app.OnMessage(id, msg);
+        });
+
+    app.SetShutdownHandler([&]() {
+            server->Stop();
+            io.stop();
+        });
+
     server->Accept();
-
-    App app(running);
-    while (running.load())
-    {
-        io.run_one();
-        app.Run();
-    }
-
-    server->Stop();
+    io.run();
 
     return 0;
 }
