@@ -40,7 +40,7 @@ void TcpServer::Accept()
 
                 session->SetMessageHandler(
                     [self](uint64_t id, const std::string& msg) {
-                        self->OnMessage(id, msg);
+                        self->HandleClientMessage(id, msg);
                     });
 
                 session->SetDisconnectHandler(
@@ -76,7 +76,7 @@ void TcpServer::Stop()
     sessions_.clear();
 }
 
-void TcpServer::OnMessage(uint64_t id, const std::string& msg)
+void TcpServer::HandleClientMessage(uint64_t id, const std::string& msg)
 {
     std::cout << "Client " << id << ": " << msg << "\n";
     if (onMessage_) {

@@ -56,6 +56,7 @@ void Session::Send(const std::string& msg)
     connection_->Send(msg);
 }
 
+// callbacks
 void Session::SetMessageHandler(MessageHandler handler)
 {
     onMessage_ = std::move(handler);

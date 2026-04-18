@@ -24,10 +24,12 @@ public:
 	void Connect();
 	void Shutdown();
 	void Send(const std::string& msg);
+	void HandleIncomingMessage(const std::string& msg);
 	void SetMessageHandler(MessageHandler handler);
 private:
 	asio::io_context& io_context_;
 	tcp::endpoint endpoint_;
 	std::shared_ptr<Connection> connection_;
 	MessageHandler onMessage_;
+	uint64_t id_ = 0;
 };

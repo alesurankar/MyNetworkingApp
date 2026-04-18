@@ -40,9 +40,8 @@ void TcpClient::Connect()
 				connection_ = std::make_shared<Connection>(std::move(*socket));
 
 				connection_->SetMessageHandler(
-					[this](const std::string& msg) {
-						if (onMessage_)
-							onMessage_(msg);
+					[self = shared_from_this()](const std::string& msg) {
+						self->HandleIncomingMessage(msg);
 					});
 				connection_->Open();
 			}
@@ -55,7 +54,7 @@ void TcpClient::Connect()
 void TcpClient::Shutdown()
 {
 	if (connection_) {
-		std::cout << "Stoping connection\n";
+		std::cout << "Stopping connection\n";
 		connection_->Close();
 	}
 }
@@ -67,6 +66,18 @@ void TcpClient::Send(const std::string& msg)
 	}
 }
 
+void TcpClient::HandleIncomingMessage(const std::string& msg)
+{
+	if (msg.starts_with("ID:")) {
+		id_ = std::stoull(msg.substr(3));
+		std::cout << "Assigned client ID: " << id_ << "\n";
+		return;
+	}
+
+	if (onMessage_) {
+		onMessage_(msg);
+	}
+}
 
 //Callbacks
 void TcpClient::SetMessageHandler(MessageHandler handler)

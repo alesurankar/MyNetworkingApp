@@ -9,7 +9,7 @@
 
 void App::OnMessage(uint64_t id, const std::string& msg)
 {
-    std::cout << "MSG RECEIVED from " << id << ": " << msg << "\n";
+    std::cout << "MSG RECEIVED from ID: " << id << ": " << msg << "\n";
 }
 
 // callbacks

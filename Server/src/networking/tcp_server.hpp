@@ -24,7 +24,7 @@ public:
 	TcpServer(asio::io_context& io_context, std::string_view address, uint16_t port);
 	void Accept();
 	void Stop();
-	void OnMessage(uint64_t id, const std::string& msg);
+	void HandleClientMessage(uint64_t id, const std::string& msg);
 	void SetMessageHandler(MessageHandler handler);
 private:
 	tcp::acceptor acceptor_;
